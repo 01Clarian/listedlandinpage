@@ -140,15 +140,14 @@
     }
   }
   
-/* "Coming Soon..." Centered + Strong Rainbow Glow Effect */
+/* Reduce the space between logo, text, and icons */
 .coming-soon {
     font-size: 24px;
     font-weight: bold;
     color: white;
-    margin-top: 20px;
+    margin-top: -15px; /* Pull closer to the logo */
     text-align: center;
     animation: rainbow-glow 6s infinite alternate;
-
   }
   
   /* Keyframes for Rainbow Glow */
@@ -169,16 +168,21 @@
     margin-top: 15px;
   }
   
-  /* Ensure icons stay white */
-  .social-icons a svg {
-    color: rgb(250, 214, 255) !important; /* Forces icons to stay white */
-    transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+
+
+/* Adjust spacing for social icons */
+.social-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px; /* Reduce spacing */
+    margin-top: -5px; /* Bring closer to "Coming Soon" */
   }
   
-  /* Hover effect */
-  .social-icons a:hover svg {
-    color: #ccc !important; /* Slightly dim on hover */
-    transform: scale(1.1); /* Small scaling effect */
+  /* Ensure icons stay white */
+  .social-icons a svg {
+    color: rgb(241, 198, 248) !important; /* Forces icons to stay white */
+    transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
   }
   
   /* Footer Centered */
