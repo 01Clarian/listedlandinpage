@@ -5,14 +5,22 @@ import "./EqualizerAnimation.css";
 const letters = [
   { char: "l", bars: 4, offset: -10 },
   { char: "i", bars: 2, offset: 25.5 },
-  { char: "s", bars: 6, offset: 57 },
-  { char: "t", bars: 3, offset: 116 },
-  { char: "e", bars: 4, offset: 146 },
-  { char: "d", bars: 5, offset: 192 },
-  { char: "square", bars: 3, offset: 244 },
+  { char: "s", bars: 7, offset: 51 },
+  { char: "t", bars: 3, offset: 107 },
+  { char: "e", bars: 6, offset: 143 },
+  { char: "d", bars: 6, offset: 202 },
+  { char: "square", bars: 4, offset: 275.5 },
 ];
 
-const barColors = ["red", "orange", "yellow", "green", "blue", "purple"];
+// Adjusted to be lighter but still vibrant
+const barColors = [
+  "#FF7070", // Soft Red
+  "#FFA07A", // Warm Orange
+  "#FFD700", // Golden Yellow
+  "#90EE90", // Lush Green
+  "#87CEEB", // Sky Blue
+  "#DDA0DD", // Lavender Purple
+];
 
 export default function Home() {
   return (
@@ -50,7 +58,7 @@ export default function Home() {
             className="letter-group"
             style={{
               left: `${letter.offset}px`,
-              bottom: "247px",
+              bottom: "246px",
               display: "flex",
               flexDirection: "row",
               alignItems: "flex-start",
@@ -79,7 +87,7 @@ export default function Home() {
       </div>
 
 {/* "Coming Soon..." Text (Adjust margin for closer positioning) */}
-<p className="coming-soon mt-[-20px]">Coming Soon</p>
+<p className="coming-soon mt-[-24px]">Coming Soon</p>
 
 {/* Social Icons (Reduced spacing & positioned closer) */}
 <div className="social-icons flex justify-center gap-6 mt-2">
@@ -93,10 +101,10 @@ export default function Home() {
     <TwitterIcon size={30} className="text-white" />
   </a>
 </div>
-
+<br/>
+</div>
 {/* Footer (Closer to Icons) */}
 <footer className="mt-3">© Listed Productions. All rights reserved.</footer>
-</div>
     </main>
   );
 }
