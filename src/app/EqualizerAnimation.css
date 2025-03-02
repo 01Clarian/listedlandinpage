@@ -1,0 +1,49 @@
+/* Equalizer Container */
+.equalizer-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    background: black;
+    padding: 20px 0;
+  }
+  
+  /* Logo Wrapper */
+  .logo-wrapper {
+    position: relative;
+    z-index: 2;
+  }
+  
+  /* Equalizer Bar Wrapper */
+  .equalizer {
+    position: absolute;
+    bottom: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 300px;
+    height: 100px;
+  }
+  
+
+  
+  /* Bars */
+  .bar {
+    height: 10px;
+    transform-origin: top;
+    position: relative;
+    animation: equalizerAnimation infinite ease-in-out alternate;
+  }
+  
+  /* Animation - Grows downward only while keeping the top in place */
+  @keyframes equalizerAnimation {
+    0% {
+      transform: scaleY(1);
+    }
+    100% {
+      transform: scaleY(9);
+    }
+  }

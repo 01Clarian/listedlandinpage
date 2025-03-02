@@ -7,7 +7,7 @@
   $drop-min-size: 5;
   $drop-max-size: 20;
   $rainbow-colors: (
-    #FF0000, #FF7F00, #FFFF00, #00FF00, #0000FF, #4B0082, #8B00FF, #FFFFFF
+    #f9bebe, #FF7F00, #FFFF00, #d8ffd8, #8888f4, #bd73f2, #c482fa, #FFFFFF
   );
   
   .drip {
@@ -16,6 +16,7 @@
   
   .drip__drop {
     position: absolute;
+    opacity: .7;
     top: 0;
     left: 50%;
     margin-left: calc((var(--drop-size) * 0.5) * -1);
@@ -40,7 +41,7 @@
       animation-direction: forwards;
     }
   
-    @for $i from 1 through 20 {
+    @for $i from 1 through 2 {
       &:nth-child(#{$i}) {
         left: percentage((random(80) + 10) / 100);
         $drop-size: random(($drop-max-size) - 10);
@@ -48,10 +49,9 @@
         height: $drop-size + $drop-min-size + px;
         margin-left: ($drop-size + $drop-min-size) * 0.5px;
         animation-delay: $i * 250ms;
-        $drop-speed: (random(2000) + 1000);
+        $drop-speed: (random(14000) + 1000);
         animation-duration: $drop-speed + ms;
         
-        // Assign random rainbow color
         $color-index: random(length($rainbow-colors));
         $drop-color: nth($rainbow-colors, $color-index);
         background: $drop-color;
