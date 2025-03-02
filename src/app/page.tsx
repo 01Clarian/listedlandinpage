@@ -58,7 +58,7 @@ export default function Home() {
             className="letter-group"
             style={{
               left: `${letter.offset}px`,
-              bottom: "246px",
+              bottom: "249px",
               display: "flex",
               flexDirection: "row",
               alignItems: "flex-start",
