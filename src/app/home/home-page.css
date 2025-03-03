@@ -53,12 +53,55 @@ iframe {
     text-align: center;
   }
   
+  .home-artists-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px; /* Adjust spacing between names */
+  }
+  
+  .home-artists-links a {
+    display: inline-block; /* Ensures names stay in one line */
+    white-space: nowrap; /* Prevents names from breaking into multiple lines */
+    font-size: 2.1rem;
+    padding: 5px 10px;
+  }
+  
+  @media (max-width: 600px) {
+    .home-artists-links {
+      flex-wrap: wrap; /* Keeps all names in a single line and wraps if necessary */
+      justify-content: center;
+    }
+    
+    .home-artists-links a {
+      font-size: 1.8rem; /* Slightly reduce font size on smaller screens */
+      padding: 4px 8px;
+    }
+  }
+  
+  
+
   
   a:hover {
     border-bottom-color: transparent;
     color: #f8ec21;
   }
 
+  .slick-slide {
+    position: relative;
+    padding: 10px; /* Ensures the glow has space to be visible */
+  }
+  
+  .slick-slide > div {
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(59, 240, 13, 0.6); /* Brighter & more visible glow */
+    transition: box-shadow 0.3s ease-in-out;
+  }
+  
+  .slick-slide > div:hover {
+    box-shadow: 0 0 40px rgba(29, 145, 228, 0.9); /* Stronger glow on hover */
+  }
+  
   
   .slider{
     width: 75%;
@@ -159,6 +202,7 @@ iframe {
     section.hide {
       display: none;
     }
+
     .home-artists-links a {
       font-size: 2.1rem;
       margin: 0px 20px;

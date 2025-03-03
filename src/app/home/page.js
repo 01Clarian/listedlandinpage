@@ -46,7 +46,11 @@ export default function HomePage() {
   const [data, setData] = useState({
     listedmix: 'Mix Of The Month',
     listedmixlk: 'https://w.soundcloud.com/player/?visual=true&url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F1997778871&show_artwork=true',
-    posts: [{ title: 'Placeholder Post', excerpt: '...' }],
+    posts: [
+        { title: 'Placeholder Post', excerpt: 'https://electronicgroove.com/interview-gunita-nagpaul-eg-15-ade/' },
+        { title: 'Placeholder Post', excerpt: 'https://mixmag.net/feature/anja-schneider-steeze-fashion-shoot-berlin-techno/' },
+        { title: 'Placeholder Post', excerpt: 'https://electronicgroove.com/sen-sanik-debuts-to-get-physical-music-with-the-one-you-love/' }    
+    ],
     artists: [
         { title: 'Gets Physical', slug: '#' },
         { title: 'Anja Schneider', slug: '#' },
