@@ -14,12 +14,12 @@ const letters = [
 
 // Adjusted to be lighter but still vibrant
 const barColors = [
-  "#FF7070", // Soft Red
-  "#FFA07A", // Warm Orange
-  "#FFD700", // Golden Yellow
-  "#90EE90", // Lush Green
-  "#87CEEB", // Sky Blue
-  "#DDA0DD", // Lavender Purple
+  "#e156c5", // Soft Red
+  "#fafafa", // Warm Orange
+  "#2EACE3", // Blue
+  "#F9F345", // Yellow
+  "#ffbef0", // Purple
+  "#1B9B59", // off green
 ];
 
 export default function Home() {
