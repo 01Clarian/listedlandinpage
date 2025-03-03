@@ -2,6 +2,15 @@
     --grey: #212121;
     --spot: #68EBBC;
     --drop-timing-function: cubic-bezier(.37,0,.9,.57);
+    --primary: #ffffff;
+    --secondary: #000;
+    --lightGrey: whitesmoke;
+    --midGrey: #cacaca;
+    --darkGrey: #272727;
+    --danger: #ff3d3d;
+    --font-primary: 'Open Sans', sans-serif;
+    --font-system: system-ui; /* postcssPresetEnv */
+    --borderRadius: 3px;
   }
   
   $drop-min-size: 5;
@@ -194,4 +203,5 @@
     font-size: 12px;
     color: white;
   }
+  
   

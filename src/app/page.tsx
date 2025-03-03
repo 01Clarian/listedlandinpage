@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { FacebookIcon, InstagramIcon, TwitterIcon } from "lucide-react";
-import "./EqualizerAnimation.css";
+import "./equalizer-animation.css";
+import "./enter-page.scss";
 
 const letters = [
   { char: "l", bars: 4, offset: -10 },
