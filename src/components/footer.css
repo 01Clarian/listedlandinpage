@@ -9,13 +9,13 @@
   }
   
 
-  .example_d {
+  .example_e {
     color: white; /* Default color */
     text-decoration: none; /* Removes underline */
     transition: color 0.3s ease-in-out; /* Smooth transition */
   }
   
-  .example_d:hover {
+  .example_e:hover {
     color: pink !important; /* Changes text color to pink on hover */
   }
   

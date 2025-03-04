@@ -50,3 +50,21 @@ export async function getBanners() {
     imageUrl: item.fields.bannerImage?.fields?.file?.url || "",
   }));
 }
+
+export async function getContactPage() {
+    const res = await client.getEntries({ content_type: "contactPage" });
+  
+    if (!res.items.length) return null;
+  
+    const item = res.items[0].fields;
+  
+    return {
+      title: item.title || "Contact Us",
+      subtitle: item.subtitle || "",
+      body: item.body || null, // ✅ Keep body as a Rich Text object
+      address: item.address || "",
+      phone: item.phone || "",
+      email: item.email || "",
+    };
+  }
+  
