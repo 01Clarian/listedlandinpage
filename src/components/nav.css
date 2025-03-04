@@ -142,7 +142,7 @@
     left: 0;
     top: 100%;
     columns: 3;
-    background: #272727;
+    background: #131214;
     list-style: none;
     padding: 1em;
     transition: transform 0.3s;
@@ -275,3 +275,48 @@
     }
   }
   
+  /* Artist Links Hover Effect */
+.dropmenu ul li a {
+  display: block;
+  padding: 10px 15px;
+  transition: color 0.3s ease-in-out;
+}
+
+/* Cycle through colors dynamically */
+.dropmenu ul li:nth-child(1) a:hover {
+  color: #FF7F00; /* Light Orange */
+}
+
+.dropmenu ul li:nth-child(2) a:hover {
+  color: #FFFF00; /* Yellow */
+}
+
+.dropmenu ul li:nth-child(3) a:hover {
+  color: #d8ffd8; /* Light Green */
+}
+
+.dropmenu ul li:nth-child(4) a:hover {
+  color: #8888f4; /* Soft Purple */
+}
+
+.dropmenu ul li:nth-child(5) a:hover {
+  color: #ef4137; /* Red */
+}
+
+.dropmenu ul li:nth-child(6) a:hover {
+  color: #1895d3; /* Blue */
+}
+
+/* If there are more artists, cycle through again */
+.dropmenu ul li:nth-child(7) a:hover {
+  color: #814199; /* Dark Purple */
+}
+
+.dropmenu ul li:nth-child(8) a:hover {
+  color: #12b258; /* Green */
+}
+
+/* Keep cycling colors every 8 artists */
+.dropmenu ul li:nth-child(9) a:hover {
+  color: #FF7F00;
+}

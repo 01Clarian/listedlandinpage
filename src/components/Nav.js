@@ -54,9 +54,9 @@ export default function Navigation() {
             </Link>
             <ul>
               {artists.length > 0 ? (
-                artists.map((artist) => (
-                  <li key={artist.slug}>
-                    <Link href={`/${artist.slug}`} onClick={handleLinkClick}>
+                artists.map((artist, index) => (
+                  <li key={artist.slug} className={`artist-${index % 8}`}>
+                    <Link href={`/artists/${artist.slug}`} onClick={handleLinkClick}>
                       {artist.title}
                     </Link>
                   </li>
