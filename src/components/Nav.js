@@ -6,49 +6,25 @@ import Link from "next/link";
 import { Menu, X } from "react-feather";
 import Logo from "@/components/Logo";
 import { SocialIcon } from "react-social-icons";
+import { getArtists } from "@/lib/contentful"; // ✅ Fetch artists dynamically
 import "./nav.css";
 
-export default function Navigation({ artists = [] }) {
+export default function Navigation() {
   const [active, setActive] = useState(false);
-  const [activeSubNav, setActiveSubNav] = useState(false);
+  const [artists, setArtists] = useState([]); // ✅ Store artists dynamically
   const currentPath = usePathname();
 
-  const handleMenuToggle = () => setActive(!active);
-  const handleLinkClick = () => active && handleMenuToggle();
-  const toggleSubNav = (subNav) => setActiveSubNav(activeSubNav === subNav ? false : subNav);
+  // ✅ Fetch artists when component mounts
+  useEffect(() => {
+    async function fetchArtists() {
+      const fetchedArtists = await getArtists();
+      setArtists(fetchedArtists);
+    }
+    fetchArtists();
+  }, []);
 
-  const NavLink = ({ to, className, children, dropmenu, items, ...props }) => (
-    <>
-      {dropmenu ? (
-        <div className="dropmenu">
-          <Link
-            href={to}
-            className={`NavLink ${to === currentPath ? "active" : ""} ${className}`}
-            onClick={handleLinkClick}
-            {...props}
-          >
-            {children}
-          </Link>
-          <ul>
-            {items?.map((item) => (
-              <li key={item.node.frontmatter.title}>
-                <Link href={item.node.fields.slug}>{item.node.frontmatter.title}</Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : (
-        <Link
-          href={to}
-          className={`NavLink ${to === currentPath ? "active" : ""} ${className}`}
-          onClick={handleLinkClick}
-          {...props}
-        >
-          {children}
-        </Link>
-      )}
-    </>
-  );
+  const handleMenuToggle = () => setActive(!active);
+  const handleLinkClick = () => setActive(false); // ✅ Close menu when a link is clicked
 
   return (
     <nav className={`Nav ${active ? "Nav-active" : ""}`}>
@@ -66,12 +42,35 @@ export default function Navigation({ artists = [] }) {
             </span>
           ))}
         </div>
+
+        {/* ✅ Navigation Links */}
         <div className="Nav--Links">
-          <NavLink id="navc1" to="/home/">Home</NavLink>
-          <NavLink id="navc2" dropmenu items={artists.edges} to="/artists/">Artists</NavLink>
-          <NavLink id="navc3" to="/productions/">Productions</NavLink>
-          <NavLink id="navc4" to="/news/">Buzz</NavLink>
-          <NavLink id="navc5" to="/contact/">Contact</NavLink>
+          <Link id="navc1" href="/home/" className={`NavLink ${currentPath === "/home/" ? "active" : ""}`} onClick={handleLinkClick}>Home</Link>
+          
+          {/* ✅ Artists Dropdown */}
+          <div className="dropmenu">
+            <Link id="navc2" href="/artists/" className={`NavLink ${currentPath.startsWith("/artists") ? "active" : ""}`} onClick={handleLinkClick}>
+              Artists
+            </Link>
+            <ul>
+              {artists.length > 0 ? (
+                artists.map((artist) => (
+                  <li key={artist.slug}>
+                    <Link href={`/${artist.slug}`} onClick={handleLinkClick}>
+                      {artist.title}
+                    </Link>
+                  </li>
+                ))
+              ) : (
+                <li>Loading artists...</li>
+              )}
+            </ul>
+          </div>
+
+          <Link id="navc3" href="/productions/" className={`NavLink ${currentPath === "/productions/" ? "active" : ""}`} onClick={handleLinkClick}>Productions</Link>
+          <Link id="navc4" href="/news/" className={`NavLink ${currentPath === "/news/" ? "active" : ""}`} onClick={handleLinkClick}>Buzz</Link>
+          <Link id="navc5" href="/contact/" className={`NavLink ${currentPath === "/contact/" ? "active" : ""}`} onClick={handleLinkClick}>Contact</Link>
+          
           <a
             className="example_d"
             href="https://visitor.r20.constantcontact.com/d.jsp?llr=csi9ozbab&p=oi&m=csi9ozbab&sit=zaxq5c9bb&f=56937576-3074-4bab-becd-a2b8ce970e8b"
@@ -80,8 +79,9 @@ export default function Navigation({ artists = [] }) {
           >
             <span>Get listed</span>
           </a>
-          
         </div>
+
+        {/* Mobile Menu Button */}
         <button
           className="Button-blank Nav--MenuButton"
           style={{ color: "white" }}
@@ -89,7 +89,6 @@ export default function Navigation({ artists = [] }) {
         >
           {active ? <X /> : <Menu />}
         </button>
-        
       </div>
     </nav>
   );

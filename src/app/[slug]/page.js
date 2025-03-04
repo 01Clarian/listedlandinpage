@@ -1,7 +1,7 @@
 import React from "react";
 import Layout from "@/components/Layout";
 import { getArtists } from "@/lib/contentful";
-import './slug.css';
+import "./slug.css";
 
 // ✅ Generate static paths for artist pages
 export async function generateStaticParams() {
@@ -17,7 +17,7 @@ export default async function ArtistPage({ params }) {
   if (!artist) {
     return (
       <Layout title="Artist Not Found">
-        <div style={{ textAlign: "center", padding: "50px" }}>
+        <div className="not-found">
           <h2>404 - Artist Not Found</h2>
           <p>Sorry, we couldn't find this artist.</p>
         </div>
@@ -25,70 +25,66 @@ export default async function ArtistPage({ params }) {
     );
   }
 
+  const socialColors = ["#e476ae", "#ef4137", "#1895d3", "#814199"]; // 🎨 Social Link Colors
+
   return (
     <Layout title={artist.title}>
-      <div className="ArtistPage" style={{ maxWidth: "800px", margin: "auto", padding: "20px" }}>
+      <div className="ArtistPage">
         {/* Title */}
-        <h2 style={{ textAlign: "center" }}>{artist.title}</h2>
+        <h2 className="ArtistTitle">{artist.title}</h2>
 
         {/* Featured Image */}
         {artist.featuredImage && (
           <img
             src={artist.featuredImage}
             alt={artist.title}
-            style={{
-              width: "100%",
-              maxWidth: "600px",
-              borderRadius: "10px",
-              display: "block",
-              margin: "20px auto",
-            }}
+            className="ArtistImage"
           />
         )}
 
-                {/* Social Links */}
-                {artist.socialLinks && Object.keys(artist.socialLinks).length > 0 && (
-          <div className="ArtistSocials" style={{ marginTop: "30px", textAlign: "center" }}>
-            <div style={{ display: "flex", justifyContent: "center", gap: "15px" }}>
-              {Object.entries(artist.socialLinks).map(([platform, url]) => (
-                <a
-                  key={platform}
-                  href={url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    display: "inline-block",
-                    padding: "10px 20px",
-                    backgroundColor: "#000",
-                    color: "#fff",
-                    borderRadius: "8px",
-                    textDecoration: "none",
-                    fontSize: "14px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {platform.charAt(0).toUpperCase() + platform.slice(1)}
-                </a>
-              ))}
-            </div>
+        {/* Social Links */}
+        {artist.socialLinks && Object.keys(artist.socialLinks).length > 0 && (
+          <div className="ArtistSocials">
+            {Object.entries(artist.socialLinks).map(([platform, url], index) => (
+              <a
+                key={platform}
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  backgroundColor: "#000",
+                  color: socialColors[index % socialColors.length], // ✅ Cycle colors
+                  borderRadius: "8px",
+                  padding: "10px 20px",
+                  textDecoration: "none",
+                  fontWeight: "bold",
+                  fontSize: "14px",
+                  display: "inline-block",
+                  margin: "5px",
+                  transition: "0.3s ease",
+                }}
+              >
+                {platform.charAt(0).toUpperCase() + platform.slice(1)}
+              </a>
+            ))}
           </div>
         )}
 
         {/* Date Created */}
         {artist.dateCreated && (
-          <p style={{ textAlign: "center", fontStyle: "italic", color: "#888" }}>
+          <p className="ArtistDate">
             Updated: {new Date(artist.dateCreated).toLocaleDateString()}
           </p>
         )}
 
         {/* Bio Section */}
         {artist.bio.length > 0 && (
-          <div className="ArtistBio" style={{ marginTop: "20px", textAlign: "left" }}>
+          <div className="ArtistBio">
             <h2>About {artist.title}</h2>
             {artist.bio.map((block, index) => {
               if (block.nodeType === "paragraph") {
                 return (
-                  <p key={index} style={{ lineHeight: "1.6", fontSize: "16px" }}>
+                  <p key={index} className="BioText">
                     {block.content.map((textNode) => textNode.value).join(" ")}
                   </p>
                 );

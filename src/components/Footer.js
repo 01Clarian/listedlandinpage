@@ -18,8 +18,8 @@ export default function Footer() {
           <h2>Get listed</h2>
         </a>
       </div>
-      
-      <h3 className="taCenter" style={{ margin: "14px" }}>
+
+      <h3 className="taCenter" style={{ margin: "0" }}>
         <br />
         <div>
           {["https://www.facebook.com/listedbookings", 

@@ -2,19 +2,38 @@
     max-width: 800px;
     margin: auto;
     padding: 20px;
+    text-align: center;
   }
   
+  /* 🎨 Artist Title */
+  .ArtistTitle {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #fff;
+  }
+  
+  /* 🖼️ Featured Image */
+  .ArtistImage {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 10px;
+    display: block;
+    margin: 20px auto;
+  }
+  
+  /* 🏆 Bio Section */
   .ArtistBio {
     margin-top: 20px;
     text-align: left;
   }
   
-  .ArtistBio p {
+  .BioText {
     line-height: 1.6;
     font-size: 16px;
     color: #e8e8e8;
   }
   
+  /* 🔗 Social Links */
   .ArtistSocials {
     margin-top: 30px;
     text-align: center;
@@ -24,15 +43,38 @@
     display: inline-block;
     padding: 10px 20px;
     background-color: #000;
-    color: #fff;
     border-radius: 8px;
     text-decoration: none;
     font-size: 14px;
     font-weight: bold;
     transition: 0.3s ease;
+    margin: 5px;
   }
   
   .ArtistSocials a:hover {
-    background-color: #ef4137;
+
+  }
+  
+  /* 📅 Date */
+  .ArtistDate {
+    text-align: center;
+    font-style: italic;
+    color: #888;
+    margin-top: 10px;
+  }
+  
+  /* ❌ 404 Not Found */
+  .not-found {
+    text-align: center;
+    padding: 50px;
+  }
+  
+  .not-found h2 {
+    color: red;
+    font-size: 24px;
+  }
+  
+  .not-found p {
+    color: #bbb;
   }
   
