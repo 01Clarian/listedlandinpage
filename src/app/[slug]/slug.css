@@ -1,0 +1,38 @@
+.ArtistPage {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  .ArtistBio {
+    margin-top: 20px;
+    text-align: left;
+  }
+  
+  .ArtistBio p {
+    line-height: 1.6;
+    font-size: 16px;
+    color: #e8e8e8;
+  }
+  
+  .ArtistSocials {
+    margin-top: 30px;
+    text-align: center;
+  }
+  
+  .ArtistSocials a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #000;
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    transition: 0.3s ease;
+  }
+  
+  .ArtistSocials a:hover {
+    background-color: #ef4137;
+  }
+  

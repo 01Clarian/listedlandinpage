@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "contentful": "^11.5.3",
     "date-fns": "^4.1.0",
     "lucide-react": "^0.477.0",
     "modern-normalize": "^3.0.1",

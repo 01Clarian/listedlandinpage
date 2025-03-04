@@ -80,6 +80,7 @@ export default function Navigation({ artists = [] }) {
           >
             <span>Get listed</span>
           </a>
+          
         </div>
         <button
           className="Button-blank Nav--MenuButton"
@@ -88,6 +89,7 @@ export default function Navigation({ artists = [] }) {
         >
           {active ? <X /> : <Menu />}
         </button>
+        
       </div>
     </nav>
   );

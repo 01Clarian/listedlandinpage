@@ -1,0 +1,74 @@
+/* Grid layout for artist cards */
+.ArtistSection--Grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns default */
+  grid-gap: 20px; /* Space between cards */
+  justify-content: center;
+  align-items: stretch; /* Ensures all cards are the same height */
+  padding: 20px;
+}
+
+/* Artist Card Styling */
+.ArtistCard {
+  background-color: #222;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5); /* White glow */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 350px; /* Ensures all cards are the same height */
+}
+
+/* Stronger glow on hover */
+.ArtistCard:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.8);
+}
+
+/* Image container to maintain uniform size */
+.ArtistCard--Image {
+  width: 100%;
+  height: 200px; /* Ensures all images have the same height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+/* Ensure images fill the container without stretching */
+.ArtistCard--Image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Keeps proportions while filling space */
+  border-radius: 10px;
+}
+
+/* Artist title inside the card */
+.ArtistCard--Content h3 {
+  font-size: 1.4rem;
+  color: white;
+  margin-top: 10px;
+}
+
+/* Responsive Fixes */
+@media (max-width: 1200px) {
+  .ArtistSection--Grid {
+    grid-template-columns: repeat(3, 1fr); /* 3 columns on medium screens */
+  }
+}
+
+@media (max-width: 900px) {
+  .ArtistSection--Grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+  }
+}
+
+@media (max-width: 600px) {
+  .ArtistSection--Grid {
+    grid-template-columns: repeat(1, 1fr); /* 1 column on mobile */
+  }
+}
