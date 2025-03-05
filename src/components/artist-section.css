@@ -10,11 +10,11 @@
 
 /* Artist Card Styling */
 .ArtistCard {
-  background-color: #222;
+  background-color: #170202;
   padding: 20px;
   border-radius: 12px;
   text-align: center;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5); /* White glow */
+  box-shadow: 0 0 10px rgba(176, 255, 215, 0.5); /* White glow */
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   display: flex;
   flex-direction: column;
@@ -25,7 +25,7 @@
 /* Stronger glow on hover */
 .ArtistCard:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 40px rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 40px rgba(242, 254, 198, 0.8);
 }
 
 /* Image container to maintain uniform size */

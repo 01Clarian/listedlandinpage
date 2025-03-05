@@ -1,28 +1,68 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { PhotoProvider, PhotoView } from "react-photo-view"; // ✅ Lightbox for images
 import "react-photo-view/dist/react-photo-view.css";
 import "./gallery.css";
+import Image from "next/image";
+import _kebabCase from "lodash/kebabCase";
 
+// ✅ Gallery Component
 const Gallery = ({ images }) => {
-  if (!images || images.length === 0) {
-    return <p>No images available.</p>;
-  }
+  const [sliderImages, setSliderImages] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    // ✅ Fetch image dimensions dynamically
+    async function fetchImageInfo(img, i) {
+      try {
+        const res = await fetch(img.image + "-/json/");
+        if (!res.ok) throw new Error("Failed to fetch image metadata");
+        const result = await res.json();
+
+        setSliderImages((prev) => {
+          const newImagesArr = [...prev];
+          newImagesArr[i] = {
+            src: img.image,
+            title: img.title,
+            w: result.width,
+            h: result.height,
+          };
+          return newImagesArr;
+        });
+      } catch (error) {
+        console.error("Error fetching image metadata:", error);
+      }
+    }
+
+    images.forEach((img, i) => fetchImageInfo(img, i));
+  }, [images]);
 
   return (
     <PhotoProvider>
       <div className="Gallery">
-        {images.map((image, index) => (
-          <figure key={index} className="Gallery--Item">
-            <PhotoView src={image.image}>
-              <img
-                src={image.image}
-                alt={image.alt || `Gallery image ${index}`}
-                className="Gallery--Image"
-              />
-            </PhotoView>
+        {images.map((image, idx) => (
+          <figure
+            className="Gallery--Item"
+            key={`${_kebabCase(image.alt)}-${idx}`}
+            onClick={() => {
+              setIndex(idx);
+              setIsOpen(true);
+            }}
+          >
+            <div>
+              <PhotoView src={image.image}>
+                <Image
+                  src={image.image}
+                  alt={image.alt}
+                  width={300} // Adjust size accordingly
+                  height={200}
+                  style={{ objectFit: "cover", borderRadius: "8px" }}
+                />
+              </PhotoView>
+            </div>
             {image.title && <figcaption>{image.title}</figcaption>}
           </figure>
         ))}
@@ -31,11 +71,12 @@ const Gallery = ({ images }) => {
   );
 };
 
+// ✅ PropTypes validation
 Gallery.propTypes = {
   images: PropTypes.arrayOf(
     PropTypes.shape({
       image: PropTypes.string.isRequired,
-      alt: PropTypes.string,
+      alt: PropTypes.string.isRequired,
       title: PropTypes.string,
     })
   ).isRequired,

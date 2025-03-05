@@ -68,33 +68,46 @@ export async function getContactPage() {
     };
   }
   
-
   export async function getProductionsPage() {
-    const res = await client.getEntries({ content_type: "productionsPage" });
+    try {
+      console.log("🔥 Fetching data from Contentful...");
+      const res = await client.getEntries({ content_type: "productions" });
   
-    if (!res.items.length) return null;
+      if (!res.items.length) {
+        console.warn("⚠️ No items found for productions!");
+        return null;
+      }
   
-    const page = res.items[0].fields;
+      console.log("✅ Contentful API Response:", res);
   
-    return {
-      title: page.title || "Productions",
-      featuredImage: page.featuredImage?.fields?.file?.url
-        ? `https:${page.featuredImage.fields.file.url}`
-        : "",
-      section1: page.section1 || "",
-      section2: page.section2 || "",
-      video: page.video?.fields?.file?.url ? `https:${page.video.fields.file.url}` : "",
-      videoPoster: page.videoPoster?.fields?.file?.url
-        ? `https:${page.videoPoster.fields.file.url}`
-        : "",
-      videoTitle: page.videoTitle || "",
-      gallery: page.gallery
-        ? page.gallery.map((image) => ({
-            image: `https:${image.fields.file.url}`,
-            alt: image.fields.title || "Gallery Image",
-            title: image.fields.description || "",
-          }))
-        : [],
-    };
+      const page = res.items[0].fields;
+  
+      const formattedData = {
+        title: page.title || "Productions",
+        featuredImage: page.featuredImage?.fields?.file?.url
+          ? `https:${page.featuredImage.fields.file.url}`
+          : "",
+        section1: page.section1 || "",
+        section2: page.section2 || "",
+        video: page.videoUrl || "", // ✅ Now using Video URL
+        videoPoster: page.videoPoster?.fields?.file?.url
+          ? `https:${page.videoPoster.fields.file.url}`
+          : "",
+        videoTitle: page.videoTitle || "",
+        gallery: page.gallery?.fields?.file?.url // ✅ Handle single image correctly
+          ? {
+              image: `https:${page.gallery.fields.file.url}`,
+              alt: page.gallery.fields.title || "Gallery Image",
+              title: page.gallery.fields.description || "",
+            }
+          : null, // ✅ Set null if no gallery image exists
+      };
+  
+      console.log("✅ Formatted Data:", formattedData);
+      return formattedData;
+    } catch (error) {
+      console.error("❌ Error fetching Contentful data:", error);
+      return null;
+    }
   }
   
