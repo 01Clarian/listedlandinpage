@@ -102,7 +102,6 @@ export default function Home() {
     <TwitterIcon size={30} className="text-white" />
   </a>
 </div>
-<br/>
 </div>
 {/* Footer (Closer to Icons) */}
 <footer className="mt-3">© Listed Productions. All rights reserved.</footer>

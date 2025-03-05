@@ -41,7 +41,7 @@ const SlideContent = ({ url }) => {
     </>
   );
 };
-
+<br/>
 export default function HomePage() {
   const [data, setData] = useState({
     listedmix: "Mix Of The Month",
@@ -97,7 +97,9 @@ export default function HomePage() {
         </Slider>
       </div>
       <div style={{ textAlign: "center" }}>
+        <br/>
         <h2>Buzz</h2>
+        <br/>
       </div>
       <main className="Blog">
         <section className="section">
@@ -110,6 +112,7 @@ export default function HomePage() {
         <div style={{ textAlign: "center" }}>
           <div className="soundcloud-container">
             <h2>{data.listedmix}</h2>
+            <br/>
             <div className="glow-card">
               <iframe
                 title="listed-playlist"

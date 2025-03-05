@@ -32,7 +32,6 @@ export default function Footer() {
           ))}
         </div>
       </h3>
-      <InstagramFeed count="8" />
       <footer className="footer">
         <div className="container taCenter">
           <span style={{ color: "white" }}>

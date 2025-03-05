@@ -68,3 +68,33 @@ export async function getContactPage() {
     };
   }
   
+
+  export async function getProductionsPage() {
+    const res = await client.getEntries({ content_type: "productionsPage" });
+  
+    if (!res.items.length) return null;
+  
+    const page = res.items[0].fields;
+  
+    return {
+      title: page.title || "Productions",
+      featuredImage: page.featuredImage?.fields?.file?.url
+        ? `https:${page.featuredImage.fields.file.url}`
+        : "",
+      section1: page.section1 || "",
+      section2: page.section2 || "",
+      video: page.video?.fields?.file?.url ? `https:${page.video.fields.file.url}` : "",
+      videoPoster: page.videoPoster?.fields?.file?.url
+        ? `https:${page.videoPoster.fields.file.url}`
+        : "",
+      videoTitle: page.videoTitle || "",
+      gallery: page.gallery
+        ? page.gallery.map((image) => ({
+            image: `https:${image.fields.file.url}`,
+            alt: image.fields.title || "Gallery Image",
+            title: image.fields.description || "",
+          }))
+        : [],
+    };
+  }
+  
