@@ -3,12 +3,14 @@
 import React, { useState, useEffect } from "react";
 import Layout from "@/components/Layout";
 import PostSection from "@/components/PostSection";
-import { getArtists, getArticles, getBanners } from "@/lib/contentful"; // Import getBanners
+import { getArtists, getArticles, getBanners } from "@/lib/contentful";
 import Slider from "react-slick";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "slick-carousel/slick/slick.css";
 import "./home-page.css";
 import "@/styles/styles.css";
+
+const ARTICLES_PER_PAGE = 6; // ✅ Limit to 6 articles per page
 
 const SlideContent = ({ url }) => {
   const [type, setType] = useState("");
@@ -41,28 +43,30 @@ const SlideContent = ({ url }) => {
     </>
   );
 };
-<br/>
+
 export default function HomePage() {
   const [data, setData] = useState({
     listedmix: "Mix Of The Month",
     listedmixlk:
       "https://w.soundcloud.com/player/?visual=true&url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F1997778871&show_artwork=true",
-    posts: [], // Placeholder for dynamically fetched posts
+    posts: [],
     artists: [],
-    featuredImages: [], // Initially empty, will be replaced with banners from Contentful
+    featuredImages: [],
   });
+
+  const [currentPage, setCurrentPage] = useState(1); // ✅ Track current page
 
   useEffect(() => {
     async function fetchData() {
       const artistsData = await getArtists();
       const articlesData = await getArticles();
-      const bannersData = await getBanners(); // Fetch banners from Contentful
+      const bannersData = await getBanners();
 
       setData((prevData) => ({
         ...prevData,
         artists: artistsData,
-        posts: articlesData, // Dynamically set posts
-        featuredImages: bannersData.map((banner) => banner.imageUrl), // Extract image URLs
+        posts: articlesData,
+        featuredImages: bannersData.map((banner) => banner.imageUrl),
       }));
     }
 
@@ -81,6 +85,23 @@ export default function HomePage() {
     slidesToScroll: 1,
   };
 
+  // ✅ **Pagination Logic**
+  const indexOfLastArticle = currentPage * ARTICLES_PER_PAGE;
+  const indexOfFirstArticle = indexOfLastArticle - ARTICLES_PER_PAGE;
+  const currentArticles = data.posts.slice(indexOfFirstArticle, indexOfLastArticle);
+
+  const nextPage = () => {
+    if (indexOfLastArticle < data.posts.length) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
   return (
     <Layout title="Home">
       <div className="fixcenter">
@@ -96,23 +117,40 @@ export default function HomePage() {
           )}
         </Slider>
       </div>
+
       <div style={{ textAlign: "center" }}>
-        <br/>
+        <br />
         <h2>Buzz</h2>
-        <br/>
+        <br />
       </div>
+
       <main className="Blog">
         <section className="section">
           <div className="container">
             <br />
-            {/* Pass dynamically fetched articles as posts */}
-            <PostSection posts={data.posts} />
+            {currentArticles.length > 0 ? (
+              <>
+                <PostSection posts={currentArticles} />
+                <div className="pagination">
+                  <button onClick={prevPage} disabled={currentPage === 1}>
+                    ← Previous
+                  </button>
+                  <span> Page {currentPage} </span>
+                  <button onClick={nextPage} disabled={indexOfLastArticle >= data.posts.length}>
+                    Next →
+                  </button>
+                </div>
+              </>
+            ) : (
+              <p>Loading articles...</p>
+            )}
           </div>
         </section>
+
         <div style={{ textAlign: "center" }}>
           <div className="soundcloud-container">
             <h2>{data.listedmix}</h2>
-            <br/>
+            <br />
             <div className="glow-card">
               <iframe
                 title="listed-playlist"
@@ -125,6 +163,7 @@ export default function HomePage() {
               ></iframe>
             </div>
           </div>
+
           <div className="home-artists-links">
             <div style={{ textAlign: "center" }}>
               <br />

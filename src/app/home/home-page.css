@@ -245,4 +245,39 @@ iframe {
   .glow-card iframe {
     border-radius: 10px;
   }
+  .pagination {
+    text-align: center;
+    margin: 30px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .pagination button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #ff007f; /* ✅ Pink arrows */
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+  }
+  
+  .pagination button:hover {
+    transform: scale(1.2);
+    color: #ff66a3; /* Lighter pink on hover */
+  }
+  
+  .pagination button:disabled {
+    color: #888;
+    cursor: not-allowed;
+    transform: scale(1);
+  }
+  
+  .pagination span {
+    font-size: 1.3rem;
+    color: white;
+    text-shadow: 0 0 8px #ff007f, 0 0 15px #ff007f; /* ✅ Glowing text effect */
+    font-weight: bold;
+  }
   

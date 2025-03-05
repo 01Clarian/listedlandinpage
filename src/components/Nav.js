@@ -68,7 +68,7 @@ export default function Navigation() {
           </div>
 
           <Link id="navc3" href="/productions/" className={`NavLink ${currentPath === "/productions/" ? "active" : ""}`} onClick={handleLinkClick}>Productions</Link>
-          <Link id="navc4" href="/news/" className={`NavLink ${currentPath === "/news/" ? "active" : ""}`} onClick={handleLinkClick}>Buzz</Link>
+          <Link id="navc4" href="/buzz/" className={`NavLink ${currentPath === "/news/" ? "active" : ""}`} onClick={handleLinkClick}>Buzz</Link>
           <Link id="navc5" href="/contact/" className={`NavLink ${currentPath === "/contact/" ? "active" : ""}`} onClick={handleLinkClick}>Contact</Link>
           
           <a
