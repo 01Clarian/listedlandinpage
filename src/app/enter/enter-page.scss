@@ -158,7 +158,12 @@
     text-align: center;
     animation: rainbow-glow 6s infinite alternate;
   }
-  
+
+.button-enter {
+  margin-top: -60px; /* Adjust this value to move it higher */
+  position: relative;
+  z-index: 10;
+}
   /* Keyframes for Rainbow Glow */
   @keyframes rainbow-glow { 
     60% { text-shadow: 0 0 10px #0d6f0d, 0 0 20px #010c01, 0 0 30px #00FF00; } 
