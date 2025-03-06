@@ -6,3 +6,76 @@
     margin-top: -115px;
 }
 }
+
+/* Drip Container */
+.drip {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* Drip Drops (Circular Glowing Holes) */
+  .drip__drop {
+    position: absolute;
+    top: -10%;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    transform-origin: top center;
+    animation: drop-fall linear infinite;
+    
+    /* Create the glowing hole effect */
+    background: radial-gradient(circle, 
+        rgba(0, 0, 0, 0) 40%, /* Transparent center */
+        rgba(255, 255, 255, 0.5) 70%, /* Soft glow */
+        rgba(255, 255, 255, 0.1) 90% /* Fading glow */
+    );
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5),  /* Outer glow */
+                0 0 40px rgba(255, 255, 255, 0.3),
+                inset 0 0 10px rgba(255, 255, 255, 0.5); /* Inner glow for depth */
+  }
+  
+  /* Side Drips (One on Left, One on Right) */
+  .drip__drop.left-drip,
+  .drip__drop.right-drip {
+    top: -5%;
+    width: 20px;
+    height: 20px;
+    animation: drop-fall 6s linear infinite;
+  }
+  
+  /* Left Drip Positioned Inward */
+  .drip__drop.left-drip {
+    left: 10%;
+    animation-duration: 8.5s;
+    background: radial-gradient(circle, 
+        rgba(0, 0, 0, 0) 40%, 
+        rgba(127, 255, 124, 0.5) 70%, 
+        rgba(127, 255, 124, 0.1) 90%);
+    box-shadow: 0 0 20px #7fff7c, 0 0 40px #4eff4c, inset 0 0 10px #7fff7c;
+  }
+  
+  /* Right Drip Positioned Inward */
+  .drip__drop.right-drip {
+    right: 10%;
+    animation-duration: 11s;
+    background: radial-gradient(circle, 
+        rgba(0, 0, 0, 0) 40%, 
+        rgba(164, 194, 244, 0.5) 70%, 
+        rgba(164, 194, 244, 0.1) 90%);
+    box-shadow: 0 0 20px #a4c2f4, 0 0 40px #82a3f0, inset 0 0 10px #a4c2f4;
+  }
+  
+  /* Falling Animation */
+  @keyframes drop-fall {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.9;
+    }
+    100% {
+      transform: translateY(120vh) scale(0.6);
+      opacity: 0;
+    }
+  }

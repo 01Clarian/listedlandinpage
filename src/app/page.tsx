@@ -46,7 +46,7 @@ export default function Home() {
   </div>
   {/* Drips Under Logo */}
   <div className="relative flex justify-center mt-[-10px]">
-    {[...Array(6)].map((_, i) => (
+    {[...Array(1)].map((_, i) => (
       <div key={i} className="drip__drop"></div>
     ))}
   </div>
