@@ -59,7 +59,7 @@ export default function Home() {
             className="letter-group"
             style={{
               left: `${letter.offset}px`,
-              bottom: "249px",
+              bottom: "229px",
               display: "flex",
               flexDirection: "row",
               alignItems: "flex-start",

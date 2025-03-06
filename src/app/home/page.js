@@ -102,9 +102,23 @@ export default function HomePage() {
     }
   };
 
+
   return (
     <Layout title="Home">
-      <div className="fixcenter">
+      <div className="fixcenter drip">
+        {/* Rainbow Drips Falling from the Top */}
+        {[...Array(10)].map((_, i) => (
+          <div key={`drip-${i}`} className="drip__drop"></div>
+        ))}
+
+        {/* Drips Falling from Left & Right Sides */}
+        {[...Array(5)].map((_, i) => (
+          <div key={`left-drip-${i}`} className="drip__drop side-drip" style={{ left: `${Math.random() * 5}%` }}></div>
+        ))}
+        {[...Array(5)].map((_, i) => (
+          <div key={`right-drip-${i}`} className="drip__drop side-drip" style={{ right: `${Math.random() * 5}%` }}></div>
+        ))}
+
         <Slider {...settings} className="slider">
           {data.featuredImages.length > 0 ? (
             data.featuredImages.map((image, index) => (
