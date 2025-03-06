@@ -12,16 +12,6 @@ import "@/styles/styles.css";
 
 const ARTICLES_PER_PAGE = 6; // ✅ Limit to 6 articles per page
 
-const rainbowColors = [
-  "#f9bebe", "#FF7F00", "#FFFF00", "#d8ffd8",
-  "#8888f4", "#bd73f2", "#c482fa", "#FFFFFF"
-];
-
-// ✅ Function to get a random color
-const getRandomColor = () => {
-  return rainbowColors[Math.floor(Math.random() * rainbowColors.length)];
-};
-
 const SlideContent = ({ url }) => {
   const [type, setType] = useState("");
 
@@ -64,7 +54,7 @@ export default function HomePage() {
     featuredImages: [],
   });
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1); // ✅ Track current page
 
   useEffect(() => {
     async function fetchData() {
@@ -81,32 +71,6 @@ export default function HomePage() {
     }
 
     fetchData();
-  }, []);
-
-  // ✅ **Apply Randomized Colors Dynamically**
-  useEffect(() => {
-    const drips = document.querySelectorAll(".drip__drop");
-    drips.forEach((drip) => {
-      const changeColor = () => {
-        const randomColor = getRandomColor();
-        drip.style.background = `radial-gradient(circle, 
-          rgba(0, 0, 0, 0) 40%, 
-          ${randomColor} 70%, 
-          rgba(255, 255, 255, 0.1) 90%)`;
-        drip.style.boxShadow = `0 0 20px ${randomColor}, 
-          0 0 40px ${randomColor}, 
-          inset 0 0 10px ${randomColor}`;
-      };
-
-      changeColor();
-      drip.addEventListener("animationiteration", changeColor);
-    });
-
-    return () => {
-      drips.forEach((drip) => {
-        drip.removeEventListener("animationiteration", () => {});
-      });
-    };
   }, []);
 
   const settings = {
@@ -191,6 +155,38 @@ export default function HomePage() {
             )}
           </div>
         </section>
+
+        <div style={{ textAlign: "center" }}>
+          <div className="soundcloud-container">
+            <h2>{data.listedmix}</h2>
+            <br />
+            <div className="glow-card">
+              <iframe
+                title="listed-playlist"
+                width="98%"
+                height="100%"
+                scrolling="no"
+                frameBorder="no"
+                allow="autoplay"
+                src={data.listedmixlk}
+              ></iframe>
+            </div>
+          </div>
+
+          <div className="home-artists-links">
+            <div style={{ textAlign: "center" }}>
+              <br />
+              <h2>Artists</h2>
+              <p>
+                {data.artists.map((artist) => (
+                  <a key={artist.slug} href={artist.slug} style={{ marginRight: "1em" }}>
+                    {artist.title.trim()}
+                  </a>
+                ))}
+              </p>
+            </div>
+          </div>
+        </div>
       </main>
     </Layout>
   );
