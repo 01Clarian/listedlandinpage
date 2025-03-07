@@ -39,7 +39,7 @@ export default function ArtistPage({ params }) {
       <Layout title="Artist Not Found">
         <div className="not-found">
           <h2>404 - Artist Not Found</h2>
-          <p>Sorry, we couldn't find this artist.</p>
+          <p>Sorry, we could not find this artist.</p>
         </div>
       </Layout>
     );

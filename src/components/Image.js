@@ -12,7 +12,6 @@ const Image = ({
   resolutions = "1000x",
   className = "",
   src,
-  secSet = "",
   onClick,
   title = "",
   alt = "",

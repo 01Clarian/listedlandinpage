@@ -1,6 +1,6 @@
 "use client"; // ✅ Ensure this is a Client Component
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { MapPin, Smartphone, Mail } from "react-feather";
 import Layout from "@/components/Layout";
 import FormSimple2 from "@/components/FormSimple2";
@@ -13,8 +13,11 @@ export default function ContactPage() {
   const [contactData, setContactData] = useState(null);
   const colors = ["#f9bebe", "#FF7F00", "#FFFF00", "#d8ffd8", "#8888f4", "#bd73f2", "#c482fa", "#FFFFFF"];
   
-  // ✅ Generate random colors at the top level
-  const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];
+  // ✅ Wrap in `useCallback()` to prevent unnecessary re-renders
+  const getRandomColor = useCallback(() => {
+    return colors[Math.floor(Math.random() * colors.length)];
+  }, [colors]);
+
   const [dripColors, setDripColors] = useState({
     left: getRandomColor(),
     right: getRandomColor(),
@@ -27,7 +30,7 @@ export default function ContactPage() {
     }
 
     fetchData();
-  }, []);
+  }, []); // ✅ Removed unnecessary `getRandomColor` dependency
 
   useEffect(() => {
     // ✅ Interval to update colors every fall cycle
@@ -39,7 +42,7 @@ export default function ContactPage() {
     }, 6000); // Syncs with `drop-fall` animation
 
     return () => clearInterval(colorInterval);
-  }, [getRandomColor]); // ✅ No dependency issues
+  }, [getRandomColor]); // ✅ Dependency is now stable
 
   if (!contactData) {
     return (

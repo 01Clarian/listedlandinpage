@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Layout from "@/components/Layout";
 import PostSection from "@/components/PostSection";
 import { getArticles } from "@/lib/contentful";
@@ -10,8 +10,10 @@ export default function BuzzPage() {
   const [articles, setArticles] = useState([]);
   const colors = ["#f9bebe", "#FF7F00", "#FFFF00", "#d8ffd8", "#8888f4", "#bd73f2", "#c482fa", "#FFFFFF"];
   
-  // Function to get a new random color
-  const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];
+  // ✅ Wrap in `useCallback()` to prevent unnecessary re-renders
+  const getRandomColor = useCallback(() => {
+    return colors[Math.floor(Math.random() * colors.length)];
+  }, [colors]);
 
   // ✅ State to store colors for each drip, so they change dynamically
   const [dripColors, setDripColors] = useState({
@@ -29,7 +31,7 @@ export default function BuzzPage() {
     }, 6000); // Syncs with `drop-fall` animation
 
     return () => clearInterval(colorInterval);
-  }, [getRandomColor]);
+  }, [getRandomColor]); // ✅ Dependency is now stable
 
   useEffect(() => {
     async function fetchData() {
@@ -37,7 +39,7 @@ export default function BuzzPage() {
       setArticles(fetchedArticles);
     }
     fetchData();
-  }, [getRandomColor]);
+  }, []); // ✅ Removed unnecessary `getRandomColor` dependency
 
   return (
     <Layout title="Buzz">
