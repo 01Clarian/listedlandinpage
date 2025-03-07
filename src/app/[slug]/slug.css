@@ -1,3 +1,30 @@
+/* 🔥 Centered Loading Text with Glowing Effect */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+
+.loading-text {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  animation: glow 1.5s infinite alternate;
+}
+
+/* Glowing Animation */
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 10px #e476ae, 0 0 20px #ef4137, 0 0 30px #1895d3;
+  }
+  100% {
+    text-shadow: 0 0 20px #ef4137, 0 0 30px #1895d3, 0 0 40px #814199;
+  }
+}
+
+
 .ArtistPage {
     max-width: 800px;
     margin: auto;
@@ -11,15 +38,35 @@
     font-weight: bold;
     color: #fff;
   }
+ 
   
-  /* 🖼️ Featured Image */
-  .ArtistImage {
-    width: 100%;
-    max-width: 600px;
-    border-radius: 10px;
-    display: block;
-    margin: 20px auto;
-  }
+  
+
+
+/* 🎇 Artist Image with Circle Glow Effect */
+.ArtistImage {
+  width: 100%;
+  max-width: 410px; /* ✅ Adjust size */
+  aspect-ratio: 1 / 1; /* ✅ Ensures a perfect circle */
+  border-radius: 50%; /* ✅ Makes it a circle */
+  display: block;
+  margin: 20px auto;
+  object-fit: cover; /* ✅ Ensures image fills the circle properly */
+
+  /* ✨ Glowing Effect */
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.4),
+              0 0 30px rgba(173, 216, 230, 0.6), 
+              0 0 45px rgba(30, 144, 255, 0.9);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+/* 🔥 Add a stronger glow on hover */
+.ArtistImage:hover {
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.6),
+              0 0 50px rgba(173, 216, 230, 0.8), 
+              0 0 70px rgba(30, 144, 255, 1);
+}
+
   
   /* 🏆 Bio Section */
   .ArtistBio {

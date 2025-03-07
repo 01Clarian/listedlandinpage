@@ -1,4 +1,5 @@
 @use "sass:math";
+@use "sass:list"; // ✅ Required for list operations
 
 :root {
     --grey: #212121;
@@ -13,19 +14,19 @@
     --font-primary: 'Open Sans', sans-serif;
     --font-system: system-ui; /* postcssPresetEnv */
     --borderRadius: 3px;
-  }
+}
   
-  $drop-min-size: 5;
-  $drop-max-size: 20;
-  $rainbow-colors: (
+$drop-min-size: 5;
+$drop-max-size: 20;
+$rainbow-colors: (
     #f9bebe, #FF7F00, #FFFF00, #d8ffd8, #8888f4, #bd73f2, #c482fa, #FFFFFF
-  );
-  
-  .drip {
+);
+
+.drip {
     position: relative;
-  }
-  
-  .drip__drop {
+}
+
+.drip__drop {
     position: absolute;
     opacity: .7;
     top: 0;
@@ -38,65 +39,65 @@
     animation-timing-function: var(--drop-timing-function);
     animation-iteration-count: infinite;
     animation-direction: forwards;
-  
-    &::after {
-      content: '';
-      display: block;
-      width: 100%;
-      height: 100%;
-      border-radius: 100% 0 0 100%;
-      rotate: 45deg;
-      animation-name: drop-after;
-      animation-timing-function: var(--drop-timing-function);
-      animation-iteration-count: infinite;
-      animation-direction: forwards;
-    }
 
+    &::after {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 100%;
+        border-radius: 100% 0 0 100%;
+        rotate: 45deg;
+        animation-name: drop-after;
+        animation-timing-function: var(--drop-timing-function);
+        animation-iteration-count: infinite;
+        animation-direction: forwards;
+    }
 
     @for $i from 1 through 2 {
-      &:nth-child(#{$i}) {
-        left: math.percentage(math.div(math.random(80) + 10, 100)); // ✅ Fixed division
-        $drop-size: math.random($drop-max-size - 10);
-        width: $drop-size + $drop-min-size + px;
-        height: $drop-size + $drop-min-size + px;
-        margin-left: ($drop-size + $drop-min-size) * 0.5px;
-        animation-delay: $i * 250ms;
-        $drop-speed: (math.random(14000) + 1000);
-        animation-duration: $drop-speed + ms;
+        &:nth-child(#{$i}) {
+            left: math.percentage(math.div(math.random(80) + 10, 100)); // ✅ Fixed division
+            
+            $drop-size: math.random($drop-max-size - 10);
+            width: #{$drop-size + $drop-min-size}px;
+            height: #{$drop-size + $drop-min-size}px;
+            margin-left: #{($drop-size + $drop-min-size) * 0.5}px;
+            animation-delay: #{$i * 250}ms;
+            
+            $drop-speed: math.random(14000) + 1000;
+            animation-duration: #{$drop-speed}ms;
+            
+            $color-index: math.random(list.length($rainbow-colors));
+            $drop-color: list.nth($rainbow-colors, $color-index);
+            background: $drop-color;
         
-        $color-index: math.random(length($rainbow-colors));
-        $drop-color: nth($rainbow-colors, $color-index);
-        background: $drop-color;
-        
-        &::after {
-          animation-delay: $i * 250ms;
-          animation-duration: $drop-speed + ms;
-          background: $drop-color;
+            &::after {
+                animation-delay: #{$i * 250}ms;
+                animation-duration: #{$drop-speed}ms;
+                background: $drop-color;
+            }
         }
-      }
     }
-  
-  }
-  
-  .drip--from-bottom .drip__drop {
+}
+
+.drip--from-bottom .drip__drop {
     top: 101%;
-  }
-  
-  @keyframes drop {
+}
+
+@keyframes drop {
     0% { translate: 0 -10px; scale: 1 0; }
     35% { scale: 0.5 0.8; }
     45% { scale: 0.9; translate: 0 15%; } 
     50% { scale: 0.4 1.4; }
     60% { scale: 0.5 1; }
     80%, 100% { translate: 0 calc(100vh + 100%); scale: 0.3 1.1; }
-  }
-  
-  @keyframes drop-after {
+}
+
+@keyframes drop-after {
     0%, 25% { border-radius: 0 100% 100% 100%; }
     80%, 100% { border-radius: 100%; }
-  }
-  
-  html, body {
+}
+
+html, body {
     margin: 0;
     padding: 0;
     min-height: 100%;
@@ -109,9 +110,9 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
-  }
-  
-  .container {
+}
+
+.container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -120,9 +121,9 @@
     height: 100vh;
     overflow: hidden;
     text-align: center;
-  }
-  
-  .text {
+}
+
+.text {
     padding-bottom: 10px;
     color: white;
     font-size: 70px;
@@ -132,27 +133,27 @@
     transform: scale(1);
     box-sizing: border-box;
     text-align: center;
-  
+
     @media only screen and (min-width: 780px) {
-      font-size: 100px;
-      line-height: 100px;
+        font-size: 100px;
+        line-height: 100px;
     }
-  
+
     &:hover {
-      transform: scale(1.2);
+        transform: scale(1.2);
     }
-  
+
     &::after {
-      content: '';
-      width: 100%;
-      height: 10px;
-      background: white;
-      position: absolute;
-      left: 0;
-      bottom: 0;
+        content: '';
+        width: 100%;
+        height: 10px;
+        background: white;
+        position: absolute;
+        left: 0;
+        bottom: 0;
     }
-  }
-  
+}
+
 /* Reduce the space between logo, text, and icons */
 .coming-soon {
     font-size: 24px;
@@ -161,22 +162,21 @@
     margin-top: -35px; /* Pull closer to the logo */
     text-align: center;
     animation: rainbow-glow 6s infinite alternate;
-  }
+}
 
 .button-enter {
-  margin-top: -60px; /* Adjust this value to move it higher */
-  position: relative;
-  z-index: 10;
+    margin-top: -60px; /* Adjust this value to move it higher */
+    position: relative;
+    z-index: 10;
 }
-  /* Keyframes for Rainbow Glow */
-  @keyframes rainbow-glow { 
+
+/* Keyframes for Rainbow Glow */
+@keyframes rainbow-glow { 
     60% { text-shadow: 0 0 10px #0d6f0d, 0 0 20px #010c01, 0 0 30px #00FF00; } 
     80% { text-shadow: 0 0 10px #050557, 0 0 20px #0000FF, 0 0 30px #0000FF; } 
     100% { text-shadow: 0 0 10px #8B00FF, 0 0 20px #12081b, 0 0 30px #310456; } 
-  }
-  
-  
-  
+}
+
 /* Social Icons Centered & Spaced Properly */
 .social-icons {
     display: flex;
@@ -184,9 +184,7 @@
     align-items: center;
     gap: 20px; /* Even Spacing Between Icons */
     margin-top: 15px;
-  }
-  
-
+}
 
 /* Adjust spacing for social icons */
 .social-icons {
@@ -195,22 +193,20 @@
     align-items: center;
     gap: 15px; /* Reduce spacing */
     margin-top: -5px; /* Bring closer to "Coming Soon" */
-  }
-  
-  /* Ensure icons stay white */
-  .social-icons a svg {
+}
+
+/* Ensure icons stay white */
+.social-icons a svg {
     color: rgb(241, 198, 248) !important; /* Forces icons to stay white */
     transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
-  }
-  
-  /* Footer Centered */
-  footer {
+}
+
+/* Footer Centered */
+footer {
     width: 100%;
     text-align: center;
     position: absolute;
     bottom: 10px;
     font-size: 12px;
     color: white;
-  }
-  
-  
+}

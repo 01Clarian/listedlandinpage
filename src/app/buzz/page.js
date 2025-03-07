@@ -29,7 +29,7 @@ export default function BuzzPage() {
     }, 6000); // Syncs with `drop-fall` animation
 
     return () => clearInterval(colorInterval);
-  }, []);
+  }, [getRandomColor]);
 
   useEffect(() => {
     async function fetchData() {

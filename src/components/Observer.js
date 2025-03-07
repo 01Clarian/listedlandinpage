@@ -1,16 +1,17 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 
 export default function Observer({ children, onChange }) {
   const ref = useRef(null);
   const [isIntersecting, setIsIntersecting] = useState(false);
 
-  const getCurrentScrollPos = () => {
+  // ✅ Memoized function to prevent unnecessary re-creation
+  const getCurrentScrollPos = useCallback(() => {
     return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-  };
+  }, []);
 
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     if (!ref.current) return;
     
     const threshold = getCurrentScrollPos() + window.innerHeight;
@@ -21,7 +22,7 @@ export default function Observer({ children, onChange }) {
       onChange();
       window.removeEventListener("scroll", handleScroll);
     }
-  };
+  }, [getCurrentScrollPos, isIntersecting, onChange]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);

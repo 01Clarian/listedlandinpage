@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FacebookIcon, InstagramIcon, TwitterIcon } from "lucide-react";
 import "./equalizer-animation.css";

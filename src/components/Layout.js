@@ -7,11 +7,9 @@ import Footer from "@/components/Footer";
 import "modern-normalize/modern-normalize.css";
 import "@/styles/styles.css";
 
-export default function Layout({ children, meta, title }) {
-  // TODO: Replace with real API or static config file
+export default function Layout({ children, title }) {
   const siteTitle = "Listed Productions";
   const googleTrackingId = "YOUR_GOOGLE_TRACKING_ID";
-  const socialMediaCard = { image: "/default-social-image.jpg" };
   const artists = []; // Fetch from an API or static file
   const subNav = { posts: [] }; // Fetch from an API or static file
 
@@ -24,24 +22,24 @@ export default function Layout({ children, meta, title }) {
         {/* Add other meta tags, fonts, and tracking scripts here */}
       </Head>
 
-      {/* Meta Component (Optional) */}
+      {/* ✅ Google Analytics Tracking */}
       {googleTrackingId && (
-        <script
-          async
-          src={`https://www.googletagmanager.com/gtag/js?id=${googleTrackingId}`}
-        ></script>
-      )}
-      {googleTrackingId && (
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${googleTrackingId}');
-            `,
-          }}
-        ></script>
+        <>
+          <script
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${googleTrackingId}`}
+          ></script>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${googleTrackingId}');
+              `,
+            }}
+          ></script>
+        </>
       )}
 
       <Nav subNav={subNav} artists={artists} />
