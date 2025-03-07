@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image"; // ✅ Import Next.js Image
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Menu, X } from "react-feather";
@@ -11,7 +12,7 @@ import "./nav.css";
 
 export default function Navigation() {
   const [active, setActive] = useState(false);
-  const [artists, setArtists] = useState([]); // ✅ Store artists dynamically
+  const [artists, setArtists] = useState([]);
   const currentPath = usePathname();
 
   const colors = [
@@ -57,24 +58,25 @@ export default function Navigation() {
             </span>
           ))}
 
-          {/* ✅ Custom RA Icon */}
+          {/* ✅ Custom RA Icon using Next.js `<Image />` */}
           <span style={{ margin: "5px" }}>
             <a
               href="https://ra.co/promoters/91"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <img
+              <Image
                 src="/ra.png"
                 alt="RA"
+                width={25}
+                height={25}
                 style={{
                   marginBottom: "-8.3px",
-                  width: "25px",
-                  height: "25px",
                   borderRadius: "50%",
                   objectFit: "contain",
                   filter: "invert(1)", // Ensures visibility on dark backgrounds
                 }}
+                priority // ✅ Loads faster
               />
             </a>
           </span>
@@ -95,7 +97,7 @@ export default function Navigation() {
           <div className="dropmenu">
             <Link
               id="navc2"
-              href="artists"
+              href="/artists/" // ✅ Fixed incorrect link format
               className={`NavLink ${
                 currentPath.startsWith("/artists") ? "active" : ""
               }`}
@@ -110,7 +112,7 @@ export default function Navigation() {
                   return (
                     <li key={artist.slug}>
                       <Link
-                        href={`/${artist.slug}`} // ✅ Links to `/artists/[slug]`
+                        href={`/${artist.slug}`} // ✅ Correct artist dynamic link
                         onClick={handleLinkClick}
                         style={{
                           transition: "color 0.3s ease-in-out",
@@ -142,7 +144,7 @@ export default function Navigation() {
           <Link
             id="navc4"
             href="/buzz/"
-            className={`NavLink ${currentPath === "/news/" ? "active" : ""}`}
+            className={`NavLink ${currentPath === "/buzz/" ? "active" : ""}`}
             onClick={handleLinkClick}
           >
             Buzz

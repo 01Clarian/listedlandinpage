@@ -1,9 +1,9 @@
 "use client"; // ✅ Ensure this is a Client Component
 
 import React, { useEffect, useState } from "react";
+import Image from "next/image"; // ✅ Import Next.js Image
 import Layout from "@/components/Layout";
 import Content from "@/components/Content";
-import Popup from "@/components/Popup";
 import "./productions.css";
 import { getProductionsPage } from "@/lib/contentful";
 
@@ -94,13 +94,23 @@ export default function ProductionsPage() {
             </div>
           </section>
 
-          {/* ✅ Gallery Image (Handled Directly Here Instead of Using `Gallery.js`) */}
+          {/* ✅ Gallery Image (Updated with Next.js `<Image />`) */}
           {data.gallery && (
             <section className="section marginFix">
               <div className="container">
                 <h1>Recent Events Gallery</h1>
                 <figure className="Gallery--Item">
-                  <img src={data.gallery.image} alt={data.gallery.alt} style={{ width: "100%", borderRadius: "10px" }} />
+                  <div style={{ position: "relative", width: "100%", height: "auto", borderRadius: "10px", overflow: "hidden" }}>
+                    <Image
+                      src={data.gallery.image}
+                      alt={data.gallery.alt || "Gallery Image"}
+                      layout="responsive" // ✅ Maintains aspect ratio
+                      width={800} // ✅ Arbitrary width, actual size is responsive
+                      height={500} // ✅ Arbitrary height, actual size is responsive
+                      objectFit="cover" // ✅ Ensures full coverage of the container
+                      priority // ✅ Loads image faster
+                    />
+                  </div>
                   {data.gallery.title && <figcaption>{data.gallery.title}</figcaption>}
                 </figure>
               </div>

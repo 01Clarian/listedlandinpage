@@ -12,7 +12,6 @@ const PostCard = ({
   date,
   url,
   className = "",
-  ...props
 }) => {
   const isURL = excerpt && excerpt.startsWith("http");
   const [embedFailed, setEmbedFailed] = useState(false);
@@ -46,7 +45,7 @@ const PostCard = ({
           height="600px"
           style={{ border: "none", marginTop: "10px" }}
           title={title}
-          onError={() => setEmbedFailed(true)} // If it fails, show a link instead
+          onError={() => setEmbedFailed(true)}
         ></iframe>
       ) : isURL ? (
         <p>

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import InstagramFeed from "@/components/InstagramFeed";
+import Image from "next/image"; // ✅ Import Next.js Image
 import "./footer.css";
 import { SocialIcon } from "react-social-icons";
 
@@ -36,24 +36,25 @@ export default function Footer() {
             </span>
           ))}
 
-          {/* ✅ Custom RA Icon */}
+          {/* ✅ Custom RA Icon using Next.js `<Image />` */}
           <span style={{ margin: "5px" }}>
             <a
               href="https://ra.co/promoters/91"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <img
+              <Image
                 src="/ra.png"
                 alt="RA"
+                width={50}
+                height={50}
                 style={{
-                  marginBottom:"-20px",
-                  width: "50px",
-                  height: "50px",
+                  marginBottom: "-20px",
                   borderRadius: "50%",
                   objectFit: "contain",
-                  filter: "invert(1)", // Makes it white if dark background
+                  filter: "invert(1)", // Ensures visibility on dark backgrounds
                 }}
+                priority // ✅ Ensures faster loading
               />
             </a>
           </span>

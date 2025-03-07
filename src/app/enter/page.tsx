@@ -22,7 +22,6 @@ const barColors = [
 ];
 
 export default function EnterPage() {
-  const router = useRouter();
   const [hydrated, setHydrated] = useState(false);
   const [animatedBars, setAnimatedBars] = useState([]);
 

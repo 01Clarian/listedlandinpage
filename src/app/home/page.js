@@ -9,8 +9,10 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "slick-carousel/slick/slick.css";
 import "./home-page.css";
 import "@/styles/styles.css";
+import Image from "next/image"; // ✅ Import Next.js Image
 
 const ARTICLES_PER_PAGE = 6; // ✅ Limit to 6 articles per page
+
 
 const SlideContent = ({ url }) => {
   const [type, setType] = useState("");
@@ -36,13 +38,27 @@ const SlideContent = ({ url }) => {
     }
   };
 
+  // ✅ Ensure `https:` prefix for Contentful images
+  const formattedUrl = url.startsWith("//") ? `https:${url}` : url;
+
   return (
-    <>
-      {type.includes("image") && <img src={url} alt="Slide" />}
-      {type.includes("video") && <video controls src={url}></video>}
-    </>
+    <div className="next-image-container">
+      {type.includes("image") && (
+        <Image
+          src={formattedUrl}
+          alt="Slide"
+          layout="fill" // ✅ Ensures image fills parent
+          objectFit="cover" // ✅ Prevents stretching          objectFit="cover" // ✅ Ensures full coverage without distortion
+          unoptimized // ✅ Disables Next.js automatic optimization for faster load times
+          loading="eager" // ✅ Loads image immediately
+          priority // ✅ Gives higher priority to load faster
+        />
+      )}
+      {type.includes("video") && <video controls src={formattedUrl}></video>}
+    </div>
   );
 };
+
 
 export default function HomePage() {
   const [data, setData] = useState({

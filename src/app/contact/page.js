@@ -39,7 +39,7 @@ export default function ContactPage() {
     }, 6000); // Syncs with `drop-fall` animation
 
     return () => clearInterval(colorInterval);
-  }, []); // ✅ No dependency issues
+  }, [getRandomColor]); // ✅ No dependency issues
 
   if (!contactData) {
     return (

@@ -37,7 +37,7 @@ export default function BuzzPage() {
       setArticles(fetchedArticles);
     }
     fetchData();
-  }, []);
+  }, [getRandomColor]);
 
   return (
     <Layout title="Buzz">

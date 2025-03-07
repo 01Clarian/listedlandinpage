@@ -127,6 +127,7 @@ iframe {
     width: 100%;
     padding-top: calc(9 / 16 * 100%);
   }
+
   .slider img, .slider video {
     object-fit: cover; /* Ensures the image fills the entire container */
     width: 100%;
@@ -148,6 +149,7 @@ iframe {
   .slider img{
     z-index: 1;
   }
+  
   .slick-slide.slick-active.slick-current{
     position: relative;
     z-index: 1;

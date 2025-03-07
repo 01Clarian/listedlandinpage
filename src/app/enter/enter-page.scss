@@ -1,3 +1,5 @@
+@use "sass:math";
+
 :root {
     --grey: #212121;
     --spot: #68EBBC;
@@ -49,19 +51,20 @@
       animation-iteration-count: infinite;
       animation-direction: forwards;
     }
-  
+
+
     @for $i from 1 through 2 {
       &:nth-child(#{$i}) {
-        left: percentage((random(80) + 10) / 100);
-        $drop-size: random(($drop-max-size) - 10);
+        left: math.percentage(math.div(math.random(80) + 10, 100)); // ✅ Fixed division
+        $drop-size: math.random($drop-max-size - 10);
         width: $drop-size + $drop-min-size + px;
         height: $drop-size + $drop-min-size + px;
         margin-left: ($drop-size + $drop-min-size) * 0.5px;
         animation-delay: $i * 250ms;
-        $drop-speed: (random(14000) + 1000);
+        $drop-speed: (math.random(14000) + 1000);
         animation-duration: $drop-speed + ms;
         
-        $color-index: random(length($rainbow-colors));
+        $color-index: math.random(length($rainbow-colors));
         $drop-color: nth($rainbow-colors, $color-index);
         background: $drop-color;
         
@@ -72,6 +75,7 @@
         }
       }
     }
+  
   }
   
   .drip--from-bottom .drip__drop {

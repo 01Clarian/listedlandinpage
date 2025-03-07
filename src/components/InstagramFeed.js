@@ -1,10 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Image from "@/components/Image";
 import "./instagram-feed.css";
 
-export default function InstagramFeed({ accessToken = "1051524659.452bff1.e557d42201cd4747a3a3b5fb42d1d4c9", count = 20 }) {
+export default function InstagramFeed({ count = 20 }) {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -17,7 +16,7 @@ export default function InstagramFeed({ accessToken = "1051524659.452bff1.e557d4
     const lastClear = localStorage.getItem("lastclear");
     const timeNow = new Date().getTime();
     // Clear storage every hour
-    if (timeNow - lastClear > 1000 * 60 * 60 * 1) {
+    if (timeNow - lastClear > 1000 * 60 * 60) {
       localStorage.clear();
       localStorage.setItem("lastclear", timeNow);
     }
@@ -43,7 +42,7 @@ export default function InstagramFeed({ accessToken = "1051524659.452bff1.e557d4
           caption: "Placeholder Post 3",
         },
       ];
-  
+
       setPosts(instaFeed);
       setLoading(false);
     } catch (err) {
@@ -52,7 +51,6 @@ export default function InstagramFeed({ accessToken = "1051524659.452bff1.e557d4
       setLoading(false);
     }
   };
-  
 
   if (loading) {
     return (
@@ -76,6 +74,9 @@ export default function InstagramFeed({ accessToken = "1051524659.452bff1.e557d4
     </div>
   );
 }
+
+// ✅ Move the Image import here since it's only used in Post
+import Image from "@/components/Image";
 
 const Post = ({ src, code }) => (
   <a

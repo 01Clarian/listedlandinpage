@@ -11,8 +11,6 @@ import _kebabCase from "lodash/kebabCase";
 // ✅ Gallery Component
 const Gallery = ({ images }) => {
   const [sliderImages, setSliderImages] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
-  const [index, setIndex] = useState(0);
 
   useEffect(() => {
     // ✅ Fetch image dimensions dynamically
@@ -47,10 +45,6 @@ const Gallery = ({ images }) => {
           <figure
             className="Gallery--Item"
             key={`${_kebabCase(image.alt)}-${idx}`}
-            onClick={() => {
-              setIndex(idx);
-              setIsOpen(true);
-            }}
           >
             <div>
               <PhotoView src={image.image}>

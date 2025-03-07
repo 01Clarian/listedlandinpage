@@ -27,7 +27,7 @@ export default function Observer({ children, onChange }) {
     window.addEventListener("scroll", handleScroll);
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [handleScroll]);
 
   return <div ref={ref}>{children}</div>;
 }

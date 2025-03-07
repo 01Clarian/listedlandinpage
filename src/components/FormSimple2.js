@@ -60,7 +60,7 @@ const FormSimple2 = () => {
         <div className="popup-overlay">
           <div className="popup-content">
             <h2>✅ Message Sent!</h2>
-            <p>Thank you for reaching out. We'll get back to you soon.</p>
+            <p>Thank you for reaching out. We will get back to you soon.</p>
           </div>
         </div>
       )}
