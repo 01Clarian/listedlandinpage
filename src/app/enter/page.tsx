@@ -20,21 +20,29 @@ const barColors = [
   "#e156c5", "#fafafa", "#2EACE3", "#F9F345", "#ffbef0", "#1B9B59",
 ];
 
+type AnimatedBar = {
+  char: string;
+  bars: number;
+  offset: number;
+  animations: { duration: string }[];
+};
+
 export default function EnterPage() {
   const [hydrated, setHydrated] = useState(false);
-  const [animatedBars, setAnimatedBars] = useState([]);
+  const [animatedBars, setAnimatedBars] = useState<AnimatedBar[]>([]);
 
   // ✅ Ensure this runs only on client to fix hydration mismatch
   useEffect(() => {
     setHydrated(true);
 
     // ✅ Generate animation durations **only on client**
-    const barsWithAnimations = letters.map((letter) => ({
+    const barsWithAnimations: AnimatedBar[] = letters.map((letter) => ({
       ...letter,
       animations: Array.from({ length: letter.bars }, () => ({
         duration: `${1.5 + Math.random()}s`,
       })),
     }));
+
     setAnimatedBars(barsWithAnimations);
   }, []);
 

@@ -1,6 +1,6 @@
 "use client"; // ✅ Ensure this is a Client Component
 
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { MapPin, Smartphone, Mail } from "react-feather";
 import Layout from "@/components/Layout";
 import FormSimple2 from "@/components/FormSimple2";
@@ -11,9 +11,11 @@ import "./contact-page.css";
 export default function ContactPage() {
   // ✅ Define all states at the top
   const [contactData, setContactData] = useState(null);
-  const colors = ["#f9bebe", "#FF7F00", "#FFFF00", "#d8ffd8", "#8888f4", "#bd73f2", "#c482fa", "#FFFFFF"];
+
+  const colors = useMemo(() => [
+    "#f9bebe", "#FF7F00", "#FFFF00", "#d8ffd8", "#8888f4", "#bd73f2", "#c482fa", "#FFFFFF"
+  ], []);
   
-  // ✅ Wrap in `useCallback()` to prevent unnecessary re-renders
   const getRandomColor = useCallback(() => {
     return colors[Math.floor(Math.random() * colors.length)];
   }, [colors]);

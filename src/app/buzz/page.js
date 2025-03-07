@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import Layout from "@/components/Layout";
 import PostSection from "@/components/PostSection";
 import { getArticles } from "@/lib/contentful";
@@ -8,9 +8,11 @@ import "./buzz-page.css";
 
 export default function BuzzPage() {
   const [articles, setArticles] = useState([]);
-  const colors = ["#f9bebe", "#FF7F00", "#FFFF00", "#d8ffd8", "#8888f4", "#bd73f2", "#c482fa", "#FFFFFF"];
+
+  const colors = useMemo(() => [
+    "#f9bebe", "#FF7F00", "#FFFF00", "#d8ffd8", "#8888f4", "#bd73f2", "#c482fa", "#FFFFFF"
+  ], []);
   
-  // ✅ Wrap in `useCallback()` to prevent unnecessary re-renders
   const getRandomColor = useCallback(() => {
     return colors[Math.floor(Math.random() * colors.length)];
   }, [colors]);
