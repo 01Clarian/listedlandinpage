@@ -14,6 +14,17 @@ export default function Navigation() {
   const [artists, setArtists] = useState([]); // ✅ Store artists dynamically
   const currentPath = usePathname();
 
+  const colors = [
+    "#FF7F00", // Light Orange
+    "#FFFF00", // Yellow
+    "#d8ffd8", // Light Green
+    "#8888f4", // Soft Purple
+    "#ef4137", // Red
+    "#1895d3", // Blue
+    "#814199", // Dark Purple
+    "#12b258", // Green
+  ];
+
   // ✅ Fetch artists when component mounts
   useEffect(() => {
     async function fetchArtists() {
@@ -57,7 +68,7 @@ export default function Navigation() {
                 src="/ra.png"
                 alt="RA"
                 style={{
-                  marginBottom:"-8.3px",
+                  marginBottom: "-8.3px",
                   width: "25px",
                   height: "25px",
                   borderRadius: "50%",
@@ -84,7 +95,7 @@ export default function Navigation() {
           <div className="dropmenu">
             <Link
               id="navc2"
-              href="/artists/"
+              href="artists"
               className={`NavLink ${
                 currentPath.startsWith("/artists") ? "active" : ""
               }`}
@@ -94,13 +105,24 @@ export default function Navigation() {
             </Link>
             <ul>
               {artists.length > 0 ? (
-                artists.map((artist, index) => (
-                  <li key={artist.slug} className={`artist-${index % 8}`}>
-                    <Link href={`/artists/${artist.slug}`} onClick={handleLinkClick}>
-                      {artist.title}
-                    </Link>
-                  </li>
-                ))
+                artists.map((artist, index) => {
+                  const hoverColor = colors[index % colors.length]; // ✅ Cycle through colors
+                  return (
+                    <li key={artist.slug}>
+                      <Link
+                        href={`/${artist.slug}`} // ✅ Links to `/artists/[slug]`
+                        onClick={handleLinkClick}
+                        style={{
+                          transition: "color 0.3s ease-in-out",
+                        }}
+                        onMouseEnter={(e) => (e.target.style.color = hoverColor)}
+                        onMouseLeave={(e) => (e.target.style.color = "white")} // Default color
+                      >
+                        {artist.title}
+                      </Link>
+                    </li>
+                  );
+                })
               ) : (
                 <li>Loading artists...</li>
               )}
@@ -156,4 +178,3 @@ export default function Navigation() {
     </nav>
   );
 }
-
