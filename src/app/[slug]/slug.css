@@ -125,3 +125,24 @@
     color: #bbb;
   }
   
+
+  .GigwellEmbed {
+    margin-top: 20px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+  .GigwellEmbed h2 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  .GigwellEmbed gigwell-embedded-roster {
+    width: 100%;
+    min-height: 500px; /* Adjust based on needs */
+    display: block;
+  }
+  

@@ -1,4 +1,4 @@
-"use client"; // ✅ Fix: Mark this as a Client Component
+"use client"; // ✅ Ensure this is a Client Component
 
 import React, { useState, useEffect } from "react";
 import Layout from "@/components/Layout";
@@ -13,9 +13,9 @@ import Image from "next/image"; // ✅ Import Next.js Image
 
 const ARTICLES_PER_PAGE = 6; // ✅ Limit to 6 articles per page
 
-
 const SlideContent = ({ url }) => {
-  const [type, setType] = useState("");
+  const [type, setType] = useState("image");
+  const [isLoaded, setIsLoaded] = useState(false); // Track image load state
 
   useEffect(() => {
     if (!url) return;
@@ -29,32 +29,38 @@ const SlideContent = ({ url }) => {
     }
 
     try {
-      const res = await fetch(url);
+      const res = await fetch(url, { method: "HEAD" });
       if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
-      setType(res.headers.get("Content-Type") || "");
+      setType(res.headers.get("Content-Type")?.includes("video") ? "video" : "image");
     } catch (error) {
-      console.error("Failed to fetch URL:", url, error);
-      setType("");
+      console.warn("Safari fetch block detected:", url, error);
+      setType("image");
     }
   };
 
-  // ✅ Ensure `https:` prefix for Contentful images
+  // Ensure URLs have a proper format (especially for Contentful)
   const formattedUrl = url.startsWith("//") ? `https:${url}` : url;
 
   return (
     <div className="next-image-container">
-      {type.includes("image") && (
+      {type === "image" && (
         <Image
           src={formattedUrl}
           alt="Slide"
-          layout="fill" // ✅ Ensures image fills parent
-          objectFit="cover" // ✅ Prevents stretching          objectFit="cover" // ✅ Ensures full coverage without distortion
-          unoptimized // ✅ Disables Next.js automatic optimization for faster load times
-          loading="eager" // ✅ Loads image immediately
-          priority // ✅ Gives higher priority to load faster
+          layout="fill"
+          objectFit="cover"
+          unoptimized
+          loading="eager"
+          priority
+          placeholder="blur"
+          blurDataURL="https://picsum.photos/10/10?blur"// ✅ Replace with actual low-res placeholder
+          onLoad={() => setIsLoaded(true)}
+          className={isLoaded ? "fade-in" : "hidden"}
         />
       )}
-      {type.includes("video") && <video controls src={formattedUrl}></video>}
+      {type === "video" && (
+        <video controls src={formattedUrl} width="100%" height="100%" />
+      )}
     </div>
   );
 };
@@ -70,7 +76,8 @@ export default function HomePage() {
     featuredImages: [],
   });
 
-  const [currentPage, setCurrentPage] = useState(1); // ✅ Track current page
+  const [currentPage, setCurrentPage] = useState(1);
+  const [iframeLoaded, setIframeLoaded] = useState(false); // ✅ Fix for Safari iframe issue
 
   useEffect(() => {
     async function fetchData() {
@@ -89,6 +96,11 @@ export default function HomePage() {
     fetchData();
   }, []);
 
+  // ✅ Ensure iframe only loads **AFTER hydration** (Fixes Safari issue)
+  useEffect(() => {
+    setIframeLoaded(true);
+  }, []);
+
   const settings = {
     dots: false,
     arrows: false,
@@ -101,7 +113,6 @@ export default function HomePage() {
     slidesToScroll: 1,
   };
 
-  // ✅ **Pagination Logic**
   const indexOfLastArticle = currentPage * ARTICLES_PER_PAGE;
   const indexOfFirstArticle = indexOfLastArticle - ARTICLES_PER_PAGE;
   const currentArticles = data.posts.slice(indexOfFirstArticle, indexOfLastArticle);
@@ -125,8 +136,6 @@ export default function HomePage() {
         {[...Array(6)].map((_, i) => (
           <div key={`drip-${i}`} className="drip__drop"></div>
         ))}
-
-        {/* Only Two Side Drips (Left & Right, Positioned Inward) */}
         <div className="drip__drop side-drip left-drip"></div>
         <div className="drip__drop side-drip right-drip"></div>
 
@@ -177,15 +186,22 @@ export default function HomePage() {
             <h2>{data.listedmix}</h2>
             <br />
             <div className="glow-card">
-              <iframe
-                title="listed-playlist"
-                width="98%"
-                height="100%"
-                scrolling="no"
-                frameBorder="no"
-                allow="autoplay"
-                src={data.listedmixlk}
-              ></iframe>
+              {/* ✅ Only load iframe AFTER hydration (Fixes Safari issue) */}
+              {iframeLoaded && (
+                <iframe
+                  title="listed-playlist"
+                  width="98%"
+                  height="100%"
+                  scrolling="no"
+                  frameBorder="no"
+                  allow="autoplay"
+                  src={data.listedmixlk}
+                  sandbox="allow-scripts allow-same-origin allow-popups"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  onError={() => console.warn("Safari iframe block detected")}
+                  style={{ backgroundColor: "black" }}
+                ></iframe>
+              )}
             </div>
           </div>
 

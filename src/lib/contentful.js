@@ -16,21 +16,28 @@ const client = createClient({
   accessToken: ACCESS_TOKEN,
 });
 
-// ✅ Ensure this function is only defined once
+// ✅ Fetch Artists from Contentful (Only One Definition)
 export async function getArtists() {
   const res = await client.getEntries({ content_type: "artist" });
 
   return res.items.map((item) => ({
     title: item.fields.title,
-    slug: item.fields.slug, // ✅ Ensure it's just "phillipp-jung"
-    featuredImage: item.fields.featuredImage?.fields?.file?.url 
+    slug: item.fields.slug,
+    featuredImage: item.fields.featuredImage?.fields?.file?.url
       ? `https:${item.fields.featuredImage.fields.file.url}`
       : "",
-    bio: item.fields.bio?.content || [], // ✅ Extract Rich Text content for bio
-    socialLinks: item.fields.socialLinks || {}, // ✅ JSON object containing social links
-    dateCreated: item.fields.dateCreated || null, // ✅ Store date created
+    bio: item.fields.bio?.content || [],
+    socialLinks: item.fields.socialLinks || {},
+    dateCreated: item.fields.dateCreated || null,
+
+    // ✅ Gigwell Fields
+    gigwellAgencyId: item.fields.gigwellAgencyId || null,
+    gigwellArtistId: item.fields.gigwellArtistId || null,
+    gigwellSettings: item.fields.gigwellSettings || "default",
+    gigwellStandaloneProfile: item.fields.gigwellStandaloneProfile || true,
   }));
 }
+
 
 // ✅ Fetch articles from Contentful
 export async function getArticles() {

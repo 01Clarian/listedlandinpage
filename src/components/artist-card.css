@@ -29,3 +29,23 @@
     padding: 0 1.5rem 1.5rem;
   }
   
+  .ArtistCard--Gigwell {
+    margin-top: 10px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+  .ArtistCard--Gigwell h4 {
+    margin-bottom: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  
+  .ArtistCard--Gigwell gigwell-embedded-roster {
+    width: 100%;
+    display: block;
+    min-height: 500px; /* Adjust based on your needs */
+  }
+  

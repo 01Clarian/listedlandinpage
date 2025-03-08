@@ -235,18 +235,35 @@ iframe {
   }
   
   .glow-card {
-    width: 40%;
-    height:100%;
-    max-width: 1200px; /* Adjust this value as needed */
+    width: 60%; /* Make it wider on mobile */
+    max-width: 600px; /* Limit width on larger screens */
+    height: auto; /* Ensure it scales properly */
     padding: 20px;
     border-radius: 15px;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(255, 0, 150, 0.7); /* Glow effect */
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(255, 0, 150, 0.7);
     text-align: center;
   }
+  
   
   .glow-card iframe {
     border-radius: 10px;
   }
+
+  @media (max-width: 768px) {
+    .glow-card {
+      width: 90%;
+      padding: 15px;
+      margin:10px;
+    }
+    
+    iframe {
+      width: 100%;
+      height: 200px; /* Ensure proper height */
+      padding: 15px;
+    }
+  }
+  
+
   .pagination {
     text-align: center;
     margin: 30px 0;

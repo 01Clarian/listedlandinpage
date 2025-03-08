@@ -14,6 +14,7 @@ export default function ProductionsPage() {
 
   const [data, setData] = useState(null);
   const colors = ["#f9bebe", "#FF7F00", "#FFFF00", "#d8ffd8", "#8888f4", "#bd73f2", "#c482fa", "#FFFFFF"];
+  const [dripColors, setDripColors] = useState({ left: "", right: "" });
 
   useEffect(() => {
     console.log("🔥 useEffect is running...");
@@ -37,14 +38,20 @@ export default function ProductionsPage() {
     fetchData();
   }, []);
 
-  const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];
+  // ✅ Generate and set random colors **after hydration**
+  useEffect(() => {
+    setDripColors({
+      left: colors[Math.floor(Math.random() * colors.length)],
+      right: colors[Math.floor(Math.random() * colors.length)],
+    });
+  }, []);
 
   if (!data) {
     console.warn("⏳ Data is still loading...");
     return (
       <Layout title="Productions">
         <div style={{ textAlign: "center", padding: "50px" }}>
-          <h2>Loading...</h2>
+          <h2 className="glowing-text">Loading...</h2>
         </div>
       </Layout>
     );
@@ -55,34 +62,35 @@ export default function ProductionsPage() {
   return (
     <Layout title={data.title}>
       <div className="drip-container">
-        {/* ✅ Left Side Drips (Each with a Random Color) */}
-        {[...Array(3)].map((_, i) => (
-          <div 
-            key={`left-drip-${i}`} 
-            className="drip__drop left-drip" 
-            style={{ "--random-color": getRandomColor() }}
-          ></div>
-        ))}
+        {/* ✅ Left Side Drips */}
+        <div className="drip__drop left-drip" style={{ backgroundColor: dripColors.left }}></div>
 
-        {/* ✅ Right Side Drips (Each with a Random Color) */}
-        {[...Array(3)].map((_, i) => (
-          <div 
-            key={`right-drip-${i}`} 
-            className="drip__drop right-drip" 
-            style={{ "--random-color": getRandomColor() }}
-          ></div>
-        ))}
+        {/* ✅ Right Side Drips */}
+        <div className="drip__drop right-drip" style={{ backgroundColor: dripColors.right }}></div>
 
         <main className="Prod">
-          {/* ✅ Video Section */}
+          {/* ✅ Video Section with Safari-Compatible Embed Handling */}
           {data.video && (
             <section className="section video-section">
               <div className="container" style={{ textAlign: "center" }}>
                 <h2>{data.videoTitle}</h2>
-                <video width="100%" height="500" controls>
-                  <source src={data.video} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
+                <div className="video-wrapper">
+                  <iframe
+                    src={data.video}
+                    width="100%"
+                    height="500"
+                    allowFullScreen
+                    sandbox="allow-scripts allow-same-origin allow-popups"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    onError={(e) => console.warn("Safari iframe block detected", e)}
+                    style={{
+                      border: "none",
+                      display: "block",
+                      margin: "0 auto",
+                      backgroundColor: "black",
+                    }}
+                  ></iframe>
+                </div>
               </div>
             </section>
           )}
@@ -94,21 +102,20 @@ export default function ProductionsPage() {
             </div>
           </section>
 
-          {/* ✅ Gallery Image (Updated with Next.js `<Image />`) */}
+          {/* ✅ Gallery Image (Updated with Safari Compatibility) */}
           {data.gallery && (
             <section className="section marginFix">
               <div className="container">
                 <h1>Recent Events Gallery</h1>
                 <figure className="Gallery--Item">
-                  <div style={{ position: "relative", width: "100%", height: "auto", borderRadius: "10px", overflow: "hidden" }}>
+                  <div style={{ position: "relative", width: "100%", height: "500px", borderRadius: "10px", overflow: "hidden" }}>
                     <Image
-                      src={data.gallery.image}
+                      src={data.gallery.image.startsWith("http") ? data.gallery.image : "/fallback.jpg"}
                       alt={data.gallery.alt || "Gallery Image"}
-                      layout="responsive" // ✅ Maintains aspect ratio
-                      width={800} // ✅ Arbitrary width, actual size is responsive
-                      height={500} // ✅ Arbitrary height, actual size is responsive
-                      objectFit="cover" // ✅ Ensures full coverage of the container
-                      priority // ✅ Loads image faster
+                      fill // ✅ Ensures full coverage
+                      style={{ objectFit: "cover" }} // ✅ Prevents cropping
+                      priority
+                      crossOrigin="anonymous" // ✅ Safari Compatibility
                     />
                   </div>
                   {data.gallery.title && <figcaption>{data.gallery.title}</figcaption>}
