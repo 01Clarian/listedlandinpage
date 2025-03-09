@@ -80,27 +80,30 @@
     color: #e8e8e8;
   }
   
-  /* 🔗 Social Links */
-  .ArtistSocials {
-    margin-top: 30px;
-    text-align: center;
-  }
-  
-  .ArtistSocials a {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #000;
-    border-radius: 8px;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: bold;
-    transition: 0.3s ease;
-    margin: 5px;
-  }
-  
-  .ArtistSocials a:hover {
+/* 🔗 Social Links */
+.ArtistSocials {
+  margin-top: 30px;
+  text-align: center;
+}
 
-  }
+.ArtistSocials a {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #000; /* Keep background black */
+  color: white; /* Default text color */
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+  transition: color 0.3s ease; /* Smooth transition for text color */
+  margin: 5px;
+}
+
+/* ✅ Apply dynamic text color on hover */
+.ArtistSocials a:hover {
+  color: var(--text-hover-color);
+}
+
   
   /* 📅 Date */
   .ArtistDate {

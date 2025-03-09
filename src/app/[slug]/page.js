@@ -77,16 +77,29 @@ export default function ArtistPage({ params }) {
           />
         </div>
 
-        {/* ✅ Social Links */}
+        {/* ✅ Social Links with Random Hover Font Colors */}
         {artist.socialLinks && Object.keys(artist.socialLinks).length > 0 && (
           <div className="ArtistSocials">
-            {Object.entries(artist.socialLinks).map(([platform, url]) => (
-              <a key={platform} href={url} target="_blank" rel="noopener noreferrer">
-                {platform.charAt(0).toUpperCase() + platform.slice(1)}
-              </a>
-            ))}
+            {Object.entries(artist.socialLinks).map(([platform, url], index) => {
+              // Generate a random text color
+              const randomColor = `hsl(${Math.floor(Math.random() * 360)}, 100%, 60%)`;
+
+              return (
+                <a
+                  key={platform}
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="SocialLink"
+                  style={{ "--text-hover-color": randomColor }} // Pass color to CSS variable
+                >
+                  {platform.charAt(0).toUpperCase() + platform.slice(1)}
+                </a>
+              );
+            })}
           </div>
         )}
+
 
         {/* ✅ Updated Date */}
         {artist.dateCreated && (
