@@ -1,6 +1,6 @@
 "use client"; // ✅ Ensure this is a Client Component
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import Image from "next/image"; // ✅ Import Next.js Image
 import Layout from "@/components/Layout";
 import Content from "@/components/Content";
@@ -13,8 +13,10 @@ export default function ProductionsPage() {
   console.log("🔥 ProductionsPage component is mounting...");
 
   const [data, setData] = useState(null);
-  const colors = ["#f9bebe", "#FF7F00", "#FFFF00", "#d8ffd8", "#8888f4", "#bd73f2", "#c482fa", "#FFFFFF"];
   const [dripColors, setDripColors] = useState({ left: "", right: "" });
+
+  // ✅ Wrap `colors` in `useMemo` to prevent re-initialization on every render
+  const colors = useMemo(() => ["#f9bebe", "#FF7F00", "#FFFF00", "#d8ffd8", "#8888f4", "#bd73f2", "#c482fa", "#FFFFFF"], []);
 
   useEffect(() => {
     console.log("🔥 useEffect is running...");
@@ -44,7 +46,7 @@ export default function ProductionsPage() {
       left: colors[Math.floor(Math.random() * colors.length)],
       right: colors[Math.floor(Math.random() * colors.length)],
     });
-  }, [colors]);
+  }, [colors]); // ✅ Now stable, `colors` does not change on every render
 
   if (!data) {
     console.warn("⏳ Data is still loading...");
