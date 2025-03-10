@@ -44,7 +44,7 @@ export default function ProductionsPage() {
       left: colors[Math.floor(Math.random() * colors.length)],
       right: colors[Math.floor(Math.random() * colors.length)],
     });
-  }, []);
+  }, [colors]);
 
   if (!data) {
     console.warn("⏳ Data is still loading...");

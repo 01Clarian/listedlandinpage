@@ -80,7 +80,7 @@ export default function ArtistPage({ params }) {
         {/* ✅ Social Links with Random Hover Font Colors */}
         {artist.socialLinks && Object.keys(artist.socialLinks).length > 0 && (
           <div className="ArtistSocials">
-            {Object.entries(artist.socialLinks).map(([platform, url], index) => {
+            {Object.entries(artist.socialLinks).map(([platform, url]) => {
               // Generate a random text color
               const randomColor = `hsl(${Math.floor(Math.random() * 360)}, 100%, 60%)`;
 
