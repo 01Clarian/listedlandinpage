@@ -345,6 +345,24 @@ footer {
   overflow-x: hidden;
 }
 
+@media (max-width: 390px) {
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+  }
+
+  .equalizer-bar-container,
+  .logo-with-bars {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  .letter-group {
+    max-width: 100vw;
+  }
+}
+
 .letter-group {
   display: flex;
   flex-direction: row;
