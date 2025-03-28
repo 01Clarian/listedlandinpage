@@ -45,6 +45,12 @@ const artists = [
 export default function Home() {
   const isMobile = useIsMobile(400);
 
+  // ✅ Avoid SSR hydration issues by rendering random animations only after mount
+  const [hasMounted, setHasMounted] = useState(false);
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
   const letters = [
     { char: "l", bars: 4, offset: isMobile ? -141 : -150 },
     { char: "i", bars: 2, offset: isMobile ? -114 : -120 },
@@ -69,29 +75,32 @@ export default function Home() {
           />
 
           <div className="equalizer-bar-container">
-            {letters.map((letter, index) => (
-              <div
-                key={index}
-                className="letter-group"
-                style={{
-                  transform: `translateX(${letter.offset}px)`,
-                }}
-              >
-                {[...Array(letter.bars)].map((_, i) => {
-                  const barColor = barColors[(index + i) % barColors.length];
-                  return (
-                    <div
-                      key={i}
-                      className="bar"
-                      style={{
-                        backgroundColor: barColor,
-                        animationDuration: `${1.5 + Math.random()}s`,
-                      }}
-                    />
-                  );
-                })}
-              </div>
-            ))}
+            {hasMounted &&
+              letters.map((letter, index) => (
+                <div
+                  key={index}
+                  className="letter-group"
+                  style={{
+                    transform: `translateX(${letter.offset}px)`,
+                  }}
+                >
+                  {[...Array(letter.bars)].map((_, i) => {
+                    const barColor = barColors[(index + i) % barColors.length];
+                    const randomDuration = `${1.5 + Math.random()}s`;
+
+                    return (
+                      <div
+                        key={i}
+                        className="bar"
+                        style={{
+                          backgroundColor: barColor,
+                          animationDuration: randomDuration,
+                        }}
+                      />
+                    );
+                  })}
+                </div>
+              ))}
           </div>
         </div>
 
