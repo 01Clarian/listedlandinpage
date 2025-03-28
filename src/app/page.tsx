@@ -1,17 +1,24 @@
+"use client";
+
 import Image from "next/image";
 import { FacebookIcon, InstagramIcon, TwitterIcon } from "lucide-react";
 import Link from "next/link";
 import "./EqualizerAnimation.css";
+import { useEffect, useState } from "react";
 
-const letters = [
-  { char: "l", bars: 4, offset: -150 },
-  { char: "i", bars: 2, offset: -120 },
-  { char: "s", bars: 7, offset: -81 },
-  { char: "t", bars: 3, offset: -37 },
-  { char: "e", bars: 6, offset: 10 },
-  { char: "d", bars: 6, offset: 68 },
-  { char: "square", bars: 4, offset: 135 },
-];
+// 🔧 Responsive hook to check for mobile screen
+const useIsMobile = (breakpoint = 400) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkWidth = () => setIsMobile(window.innerWidth <= breakpoint);
+    checkWidth();
+    window.addEventListener("resize", checkWidth);
+    return () => window.removeEventListener("resize", checkWidth);
+  }, [breakpoint]);
+
+  return isMobile;
+};
 
 const barColors = [
   "#e156c5",
@@ -36,6 +43,18 @@ const artists = [
 ];
 
 export default function Home() {
+  const isMobile = useIsMobile(400);
+
+  const letters = [
+    { char: "l", bars: 4, offset: isMobile ? -141 : -150 },
+    { char: "i", bars: 2, offset: isMobile ? -114 : -120 },
+    { char: "s", bars: 7, offset: isMobile ? -78 : -81 },
+    { char: "t", bars: 3, offset: isMobile ? -34 : -37 },
+    { char: "e", bars: 6, offset: isMobile ? 8 : 10 },
+    { char: "d", bars: 6, offset: isMobile ? 63 : 68 },
+    { char: "square", bars: 4, offset: isMobile ? 127 : 135 },
+  ];
+
   return (
     <main className="container drip flex flex-col items-center justify-center text-center gap-4 px-4 py-6 overflow-y-auto">
       <div className="equalizer-container max-w-screen-md w-full">
@@ -77,8 +96,8 @@ export default function Home() {
         </div>
 
         <div className="event-section">
-        <Link href="https://agzl.app.link/vsML7WU9CRb?_p=c71729c39a077af1e21490ffe9b3" target="_blank">
-          <Image src="/cover.png" alt="Event Flyer" width={1200} height={1200} />
+          <Link href="https://agzl.app.link/vsML7WU9CRb?_p=c71729c39a077af1e21490ffe9b3" target="_blank">
+            <Image src="/cover.png" alt="Event Flyer" width={1200} height={1200} />
             <p className="event-rsvp">FREE with RSVP</p>
           </Link>
 

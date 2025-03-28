@@ -338,6 +338,7 @@ footer {
   width: 100%;
   max-width: 600px;
   position: relative;
+  overflow: hidden;
 }
 
 .letter-group {
@@ -362,7 +363,6 @@ footer {
   0%, 100% { transform: scaleY(0.4); }
   50% { transform: scaleY(1); }
 }
-
 
 .logo-with-bars {
   position: relative;
