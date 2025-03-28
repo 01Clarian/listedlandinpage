@@ -125,6 +125,9 @@ body {
   justify-content: center;
   overflow: hidden;
   overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+
 
 }
 
@@ -339,6 +342,7 @@ footer {
   max-width: 600px;
   position: relative;
   overflow: hidden;
+  overflow-x: hidden;
 }
 
 .letter-group {
