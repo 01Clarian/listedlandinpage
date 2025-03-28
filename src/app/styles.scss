@@ -345,6 +345,7 @@ footer {
   overflow-x: hidden;
 }
 
+/* Force clamp on iPhone 12 and smaller */
 @media (max-width: 390px) {
   html, body {
     overflow-x: hidden;
@@ -352,13 +353,14 @@ footer {
     position: relative;
   }
 
-  .equalizer-bar-container,
-  .logo-with-bars {
+  .container,
+
+  .equalizer-bar-container {
     overflow-x: hidden;
-    max-width: 100vw;
   }
 
   .letter-group {
+    position: absolute;
     max-width: 100vw;
   }
 }
