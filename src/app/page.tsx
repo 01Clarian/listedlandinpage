@@ -1,110 +1,120 @@
 import Image from "next/image";
 import { FacebookIcon, InstagramIcon, TwitterIcon } from "lucide-react";
+import Link from "next/link";
 import "./EqualizerAnimation.css";
 
 const letters = [
-  { char: "l", bars: 4, offset: -10 },
-  { char: "i", bars: 2, offset: 25.5 },
-  { char: "s", bars: 7, offset: 51 },
-  { char: "t", bars: 3, offset: 107 },
-  { char: "e", bars: 6, offset: 143 },
-  { char: "d", bars: 6, offset: 202 },
-  { char: "square", bars: 4, offset: 275.5 },
+  { char: "l", bars: 4, offset: -150 },
+  { char: "i", bars: 2, offset: -120 },
+  { char: "s", bars: 7, offset: -81 },
+  { char: "t", bars: 3, offset: -37 },
+  { char: "e", bars: 6, offset: 10 },
+  { char: "d", bars: 6, offset: 68 },
+  { char: "square", bars: 4, offset: 135 },
 ];
 
-// Adjusted to be lighter but still vibrant
 const barColors = [
-  "#e156c5", // Soft Red
-  "#fafafa", // Warm Orange
-  "#2EACE3", // Blue
-  "#F9F345", // Yellow
-  "#ffbef0", // Purple
-  "#1B9B59", // off green
+  "#e156c5",
+  "#fafafa",
+  "#2EACE3",
+  "#F9F345",
+  "#ffbef0",
+  "#1B9B59",
+];
+
+const artists = [
+  "Anja Schneider", "Atish", "Atish & Slee", "Atnarko", "Beauty/The Beast (Philipp Jung+Holmar)",
+  "Ben Annand", "Bilaliwood", "Christopher Mohn (Dance Spirit)", "Camea", "Clarian (live or DJ)",
+  "Dory", "Dubtribe Sound System (live)", "Greg Paulus/No Regular Play",
+  "Formerly (Holmar+Philipp Jung+Anstascia+Kenny Glasgow)", "Galen", "Halo Varga",
+  "H Foundation (Hipp-e+Halo)", "Hipp-e", "Holmar", "Husa & Zeyada (live)", "Jay Tripwire",
+  "Justin Marchacos (live)", "KMLN (Tooker+Shawna)", "Lovestruckk (Nico Stojan +Holmar)",
+  "Mark Slee", "Matt Caines", "MightyKat", "m.O.N.R.O.E.", "Mr. C", "Naveen G",
+  "Nico Stojan", "Niki Sadeki", "Nikita", "Nitin", "N/UM (live)", "Philipp Jung (M.A.N.D.Y.)",
+  "Ray Zuniga+Nikita", "Ray Zuniga", "Reza Safinia (hybrid live)", "Robotek Reagan (Dance Spirit)",
+  "Saqib", "Shawna (KMLN)", "Sinca", "Sunshine Jones (live)", "Tooker (KMLN)"
 ];
 
 export default function Home() {
   return (
-    <main className="container drip flex flex-col items-center justify-center text-center gap-4">
-      <div className="equalizer-container">
-      <div className="logo-wrapper">
-      {/* Rainbow Dripping Elements */}
-      {[...Array(18)].map((_, i) => (
-        <div key={i} className="drip__drop"></div>
-      ))}
+    <main className="container drip flex flex-col items-center justify-center text-center gap-4 px-4 py-6 overflow-y-auto">
+      <div className="equalizer-container max-w-screen-md w-full">
+        <div className="logo-with-bars relative flex flex-col items-center">
+          <Image 
+            src="/mainone.png" 
+            alt="Listed Logo" 
+            width={400} 
+            height={400} 
+            className="logo"
+            style={{ objectFit: "contain" }}
+          />
 
-      {/* Logo with Drips Falling from the Bottom */}
-      <div className="drip drip--from-bottom relative flex flex-col items-center">
-  <Image 
-    src="/mainone.png" 
-    alt="Listed Logo" 
-    width={400} 
-    height={400} 
-    className="logo"
-    style={{ objectFit: "contain" }}
-  />
-  </div>
-  {/* Drips Under Logo */}
-  <div className="relative flex justify-center mt-[-10px]">
-    {[...Array(6)].map((_, i) => (
-      <div key={i} className="drip__drop"></div>
-    ))}
-  </div>
-</div>
-
-<div className="equalizer">
-        {letters.map((letter, index) => (
-          <div
-            key={index}
-            className="letter-group"
-            style={{
-              left: `${letter.offset}px`,
-              bottom: "249px",
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "flex-start",
-              position: "absolute",
-              gap: "3px",
-            }}
-          >
-            {[...Array(letter.bars)].map((_, i) => {
-              const barColor = barColors[(index + i) % barColors.length];
-              return (
-                <div
-                  key={i}
-                  className="bar"
-                  style={{
-                    backgroundColor: barColor,
-                    animationDuration: `${1.5 + Math.random()}s`,
-                    width: "2.5px",
-                    transformOrigin: "top",
-                    position: "relative",
-                  }}
-                />
-              );
-            })}
+          <div className="equalizer-bar-container">
+            {letters.map((letter, index) => (
+              <div
+                key={index}
+                className="letter-group"
+                style={{
+                  transform: `translateX(${letter.offset}px)`,
+                }}
+              >
+                {[...Array(letter.bars)].map((_, i) => {
+                  const barColor = barColors[(index + i) % barColors.length];
+                  return (
+                    <div
+                      key={i}
+                      className="bar"
+                      style={{
+                        backgroundColor: barColor,
+                        animationDuration: `${1.5 + Math.random()}s`,
+                      }}
+                    />
+                  );
+                })}
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
+
+        <div className="event-section">
+        <Link href="https://agzl.app.link/vsML7WU9CRb?_p=c71729c39a077af1e21490ffe9b3" target="_blank">
+          <Image src="/cover.png" alt="Event Flyer" width={1200} height={1200} />
+            <p className="event-rsvp">FREE with RSVP</p>
+          </Link>
+
+          <div className="artist-list">
+            {artists.map((artist, idx) => (
+              <span
+                key={artist}
+                className="artist-name"
+                style={{
+                  color: barColors[idx % barColors.length],
+                }}
+              >
+                {artist}
+              </span>
+            ))}
+          </div>
+
+          <p className="mt-6 text-white text-sm">
+            For bookings, please contact: <a href="mailto:gunita@listedbookings.com">gunita@listedbookings.com</a>
+          </p>
+        </div>
+
+        <div className="social-icons flex justify-center gap-6 mt-6">
+          <a href="https://www.facebook.com/listedproductions/" target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition">
+            <FacebookIcon size={30} className="text-white" />
+          </a>
+          <a href="https://www.instagram.com/areulisted/?hl=en" target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition">
+            <InstagramIcon size={30} className="text-white" />
+          </a>
+          <a href="https://x.com/areulisted/status/1210814507892625409" target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition">
+            <TwitterIcon size={30} className="text-white" />
+          </a>
+        </div>
+
+        <footer className="mt-6 text-xs text-white text-center">© Listed Productions. All rights reserved.</footer>
       </div>
-
-{/* "Coming Soon..." Text (Adjust margin for closer positioning) */}
-<p className="coming-soon mt-[-24px]">Coming Soon</p>
-
-{/* Social Icons (Reduced spacing & positioned closer) */}
-<div className="social-icons flex justify-center gap-6 mt-2">
-  <a href="https://www.facebook.com/listedproductions/" target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition">
-    <FacebookIcon size={30} className="text-white" />
-  </a>
-  <a href="https://www.instagram.com/areulisted/?hl=en" target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition">
-    <InstagramIcon size={30} className="text-white" />
-  </a>
-  <a href="https://x.com/areulisted/status/1210814507892625409" target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition">
-    <TwitterIcon size={30} className="text-white" />
-  </a>
-</div>
-<br/>
-</div>
-{/* Footer (Closer to Icons) */}
-<footer className="mt-3">© Listed Productions. All rights reserved.</footer>
     </main>
   );
 }

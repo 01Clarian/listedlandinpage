@@ -1,197 +1,413 @@
 :root {
-    --grey: #212121;
-    --spot: #68EBBC;
-    --drop-timing-function: cubic-bezier(.37,0,.9,.57);
-  }
+  --grey: #212121;
+  --spot: #68EBBC;
+  --drop-timing-function: cubic-bezier(.37, 0, .9, .57);
+}
+
+$drop-min-size: 5;
+$drop-max-size: 20;
+$rainbow-colors: (
+  #f9bebe, #FF7F00, #FFFF00, #d8ffd8, #8888f4, #bd73f2, #c482fa, #FFFFFF
+);
+
+.drip {
+  position: relative;
+}
+
+.event-section a {
+  text-decoration: none !important;
   
-  $drop-min-size: 5;
-  $drop-max-size: 20;
-  $rainbow-colors: (
-    #f9bebe, #FF7F00, #FFFF00, #d8ffd8, #8888f4, #bd73f2, #c482fa, #FFFFFF
-  );
-  
-  .drip {
-    position: relative;
-  }
-  
-  .drip__drop {
-    position: absolute;
-    opacity: .7;
-    top: 0;
-    left: 50%;
-    margin-left: calc((var(--drop-size) * 0.5) * -1);
-    transform-origin: top center;
-    translate: 0 -10px;
-    scale: 1 0;
-    animation-name: drop;
+}
+
+a {
+  color: rgb(143, 253, 176) !important;
+}
+
+
+.drip__drop {
+  position: absolute;
+  opacity: .7;
+  top: 0;
+  left: 50%;
+  transform-origin: top center;
+  translate: 0 -10px;
+  scale: 1 0;
+  animation-name: drop;
+  animation-timing-function: var(--drop-timing-function);
+  animation-iteration-count: infinite;
+  animation-direction: forwards;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 100% 0 0 100%;
+    rotate: 45deg;
+    animation-name: drop-after;
     animation-timing-function: var(--drop-timing-function);
     animation-iteration-count: infinite;
     animation-direction: forwards;
-  
-    &::after {
-      content: '';
-      display: block;
-      width: 100%;
-      height: 100%;
-      border-radius: 100% 0 0 100%;
-      rotate: 45deg;
-      animation-name: drop-after;
-      animation-timing-function: var(--drop-timing-function);
-      animation-iteration-count: infinite;
-      animation-direction: forwards;
-    }
-  
-    @for $i from 1 through 2 {
-      &:nth-child(#{$i}) {
-        left: percentage((random(80) + 10) / 100);
-        $drop-size: random(($drop-max-size) - 10);
-        width: $drop-size + $drop-min-size + px;
-        height: $drop-size + $drop-min-size + px;
-        margin-left: ($drop-size + $drop-min-size) * 0.5px;
+  }
+
+  @for $i from 1 through 2 {
+    &:nth-child(#{$i}) {
+      left: percentage((random(80) + 10) / 100);
+      $drop-size: random(($drop-max-size) - 10);
+      width: $drop-size + $drop-min-size + px;
+      height: $drop-size + $drop-min-size + px;
+      animation-delay: $i * 250ms;
+      $drop-speed: (random(14000) + 1000);
+      animation-duration: $drop-speed + ms;
+
+      $color-index: random(length($rainbow-colors));
+      $drop-color: nth($rainbow-colors, $color-index);
+      background: $drop-color;
+
+      &::after {
         animation-delay: $i * 250ms;
-        $drop-speed: (random(14000) + 1000);
         animation-duration: $drop-speed + ms;
-        
-        $color-index: random(length($rainbow-colors));
-        $drop-color: nth($rainbow-colors, $color-index);
         background: $drop-color;
-        
-        &::after {
-          animation-delay: $i * 250ms;
-          animation-duration: $drop-speed + ms;
-          background: $drop-color;
-        }
       }
     }
   }
-  
-  .drip--from-bottom .drip__drop {
-    top: 101%;
-  }
-  
-  @keyframes drop {
-    0% { translate: 0 -10px; scale: 1 0; }
-    35% { scale: 0.5 0.8; }
-    45% { scale: 0.9; translate: 0 15%; } 
-    50% { scale: 0.4 1.4; }
-    60% { scale: 0.5 1; }
-    80%, 100% { translate: 0 calc(100vh + 100%); scale: 0.3 1.1; }
-  }
-  
-  @keyframes drop-after {
-    0%, 25% { border-radius: 0 100% 100% 100%; }
-    80%, 100% { border-radius: 100%; }
-  }
-  
-  html, body {
-    margin: 0;
-    padding: 0;
-    min-height: 100%;
-    font-family: 'Poppins', sans-serif;
-    color: white;
-    background: black;
-    text-rendering: geometricprecision;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-  
-  .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    text-align: center;
-  }
-  
-  .text {
-    padding-bottom: 10px;
-    color: white;
-    font-size: 70px;
-    line-height: 70px;
-    font-weight: 900;
-    transition: all 0.4s;
-    transform: scale(1);
-    box-sizing: border-box;
-    text-align: center;
-  
-    @media only screen and (min-width: 780px) {
-      font-size: 100px;
-      line-height: 100px;
-    }
-  
-    &:hover {
-      transform: scale(1.2);
-    }
-  
-    &::after {
-      content: '';
-      width: 100%;
-      height: 10px;
-      background: white;
-      position: absolute;
-      left: 0;
-      bottom: 0;
-    }
-  }
-  
-/* Reduce the space between logo, text, and icons */
-.coming-soon {
-    font-size: 24px;
-    font-weight: bold;
-    color: white;
-    margin-top: -35px; /* Pull closer to the logo */
-    text-align: center;
-    animation: rainbow-glow 6s infinite alternate;
-  }
-  
-  /* Keyframes for Rainbow Glow */
-  @keyframes rainbow-glow { 
-    60% { text-shadow: 0 0 10px #0d6f0d, 0 0 20px #010c01, 0 0 30px #00FF00; } 
-    80% { text-shadow: 0 0 10px #050557, 0 0 20px #0000FF, 0 0 30px #0000FF; } 
-    100% { text-shadow: 0 0 10px #8B00FF, 0 0 20px #12081b, 0 0 30px #310456; } 
-  }
-  
-  
-  
-/* Social Icons Centered & Spaced Properly */
-.social-icons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px; /* Even Spacing Between Icons */
-    margin-top: 15px;
-  }
-  
+}
 
+.drip--from-bottom .drip__drop {
+  top: 101%;
+}
 
-/* Adjust spacing for social icons */
-.social-icons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px; /* Reduce spacing */
-    margin-top: -5px; /* Bring closer to "Coming Soon" */
+@keyframes drop {
+  0% {
+    translate: 0 -10px;
+    scale: 1 0;
   }
-  
-  /* Ensure icons stay white */
-  .social-icons a svg {
-    color: rgb(241, 198, 248) !important; /* Forces icons to stay white */
-    transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+  35% {
+    scale: 0.5 0.8;
   }
-  
-  /* Footer Centered */
-  footer {
+  45% {
+    scale: 0.9;
+    translate: 0 15%;
+  }
+  50% {
+    scale: 0.4 1.4;
+  }
+  60% {
+    scale: 0.5 1;
+  }
+  80%, 100% {
+    translate: 0 calc(100vh + 100%);
+    scale: 0.3 1.1;
+  }
+}
+
+@keyframes drop-after {
+  0%, 25% {
+    border-radius: 0 100% 100% 100%;
+  }
+  80%, 100% {
+    border-radius: 100%;
+  }
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  font-family: 'Poppins', sans-serif;
+  color: white;
+  background: black;
+  text-rendering: geometricprecision;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  overflow-y: auto;
+
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  width: 100%;
+  height: 100vh;
+  max-width: 97vw;  
+  text-align: center;
+  margin: 2px;
+  overflow: auto;
+
+}
+
+.text {
+  padding-bottom: 10px;
+  color: white;
+  font-size: 70px;
+  line-height: 70px;
+  font-weight: 900;
+  transition: all 0.4s;
+  transform: scale(1);
+  box-sizing: border-box;
+  text-align: center;
+
+  @media only screen and (min-width: 780px) {
+    font-size: 100px;
+    line-height: 100px;
+  }
+
+  &:hover {
+    transform: scale(1.2);
+  }
+
+  &::after {
+    content: '';
     width: 100%;
-    text-align: center;
+    height: 10px;
+    background: white;
     position: absolute;
-    bottom: 10px;
-    font-size: 12px;
-    color: white;
+    left: 0;
+    bottom: 0;
   }
+}
+
+/* Coming Soon text */
+.coming-soon {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  margin-top: 1.5rem;
+  text-align: center;
+  animation: rainbow-glow 6s infinite alternate;
+}
+
+/* Rainbow Glow Animation */
+@keyframes rainbow-glow {
+  60% {
+    text-shadow: 0 0 10px #0d6f0d, 0 0 20px #010c01, 0 0 30px #00FF00;
+  }
+  80% {
+    text-shadow: 0 0 10px #050557, 0 0 20px #0000FF, 0 0 30px #0000FF;
+  }
+  100% {
+    text-shadow: 0 0 10px #8B00FF, 0 0 20px #12081b, 0 0 30px #310456;
+  }
+}
+
+/* Event flyer and RSVP */
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 1rem;
+  margin-top: 1rem;
+}
+
+.event-link {
+  font-size: 4.5rem;
+  font-weight: 700;
+  margin: 1rem 0;
+  color: #fafafa;
+  text-decoration: none;
+}
+
+/* Artist list layout */
+.artist-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  max-width: 90vw;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.artist-list span {
+  font-weight: 500;
+}
+
+/* Booking email */
+.booking {
+  margin-top: 2rem;
+  font-size: 0.875rem;
+  color: white;
+}
+
+/* Social Icons */
+.social-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 2rem;
+}
+
+.social-icons a svg {
+  color: rgb(241, 198, 248) !important;
+  transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+/* Footer */
+footer {
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  color: white;
+  margin-top: 3rem;
+}
+
+/* Mobile Tweaks */
+@media (max-width: 600px) {
+  .coming-soon {
+    font-size: 20px;
+  }
+
+  .event-link {
+    font-size: 1.2rem;
+  }
+
+  .artist-list {
+    font-size: 0.8rem;
+  }
+}
+
+
+
+.event-section {
+  margin-top: 50px;
+  width: 100%;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+.event-rsvp {
+  margin-top: 1rem;
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  transition: text-shadow 0.3s ease-in-out;
+
+  &:hover {
+    text-shadow: 0 0 5px #ee1414, 0 0 10px #68EBBC, 0 0 15px #68EBBC, 0 0 20px #68EBBC;
+  }
+}
+
+
+.artist-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem;
+  max-width: 1000px;
+  padding: .5rem;
+}
+
+.artist-name {
+  display: inline-block;
+  padding: 0.2rem 0.45rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  border-radius: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  white-space: nowrap;
+}
+
+
+.equalizer {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.equalizer-bar-container {
+  display: flex;
+  bottom: 1080px;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: nowrap;
+  align-items: flex-end;
+  height: 150px; /* fixed height for consistent animation frame */
+  width: 100%;
+  max-width: 600px;
+  position: relative;
+}
+
+.letter-group {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 3px;
+}
+
+.bar {
+  width: 3px;
+  height: 100%;
+  background-color: white;
+  animation-name: bounce;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  transform-origin: bottom;
+}
+
+/* Example animation */
+@keyframes bounce {
+  0%, 100% { transform: scaleY(0.4); }
+  50% { transform: scaleY(1); }
+}
+
+
+.logo-with-bars {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.logo {
+  z-index: 30;
+}
+
+.equalizer-bar-container {
+  position: absolute;
+  top: 72%; /* Directly below the logo */
   
+  left: 50%;
+  transform: translateX(-50%);
+  height: 120px;
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.letter-group {
+  position: absolute;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 3px;
+}
+
+.bar {
+  width: 3px;
+  height: 100%;
+  transform-origin: bottom;
+  animation-name: bounce;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: scaleY(0.4); }
+  50% { transform: scaleY(1); }
+}
